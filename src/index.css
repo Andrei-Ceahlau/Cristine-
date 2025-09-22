@@ -1,0 +1,329 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom animations for enhanced UI */
+@layer utilities {
+  .animation-delay-100 {
+    animation-delay: 100ms;
+  }
+  
+  .animation-delay-200 {
+    animation-delay: 200ms;
+  }
+  
+  .animation-delay-300 {
+    animation-delay: 300ms;
+  }
+  
+  .animation-delay-400 {
+    animation-delay: 400ms;
+  }
+  
+  .animation-delay-500 {
+    animation-delay: 500ms;
+  }
+  
+  .animation-delay-1000 {
+    animation-delay: 200ms;
+  }
+  
+  .animation-delay-2000 {
+    animation-delay: 400ms;
+  }
+
+  /* Fade in up animation */
+  .animate-fade-in-up {
+    animation: fadeInUp 0.4s ease-out forwards;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Smooth scroll behavior */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #f59e0b, #ea580c);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, #d97706, #dc2626);
+  }
+
+  /* Enhanced focus styles for accessibility */
+  .focus-visible:focus {
+    outline: 2px solid #f59e0b;
+    outline-offset: 2px;
+  }
+
+  /* Glass morphism effect */
+  .glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, #f59e0b, #ea580c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Hover effects */
+  .hover-lift {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  }
+
+  /* Loading animation */
+  .loading-dots {
+    display: inline-block;
+  }
+
+  .loading-dots::after {
+    content: '';
+    animation: loading-dots 1.5s infinite;
+  }
+
+  @keyframes loading-dots {
+    0%, 20% {
+      content: '';
+    }
+    40% {
+      content: '.';
+    }
+    60% {
+      content: '..';
+    }
+    80%, 100% {
+      content: '...';
+    }
+  }
+}
+
+/* Custom font classes */
+.font-serif {
+  font-family: 'Playfair Display', serif;
+}
+
+.font-sans {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Custom animations */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+}
+
+.animation-delay-200 {
+  animation-delay: 0.1s;
+}
+
+.animation-delay-400 {
+  animation-delay: 0.2s;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d97706;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b45309;
+}
+
+/* Focus styles */
+input:focus, 
+select:focus, 
+textarea:focus,
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.1);
+}
+
+/* Loading animation for buttons */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Custom utility classes */
+.bg-pattern {
+  background-image: 
+    radial-gradient(circle at 2px 2px, rgba(255,255,255,0.1) 1px, transparent 0);
+  background-size: 20px 20px;
+}
+
+/* Text gradient */
+.text-gradient {
+  background: linear-gradient(135deg, #d97706, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Image hover effects */
+.image-hover-zoom {
+  transition: transform 0.3s ease;
+}
+
+.image-hover-zoom:hover {
+  transform: scale(1.05);
+}
+
+/* Glass morphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Enhanced Glass Card Effect pentru Navbar */
+.glass-navbar {
+  background: rgba(237, 226, 224, 0.3);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(237, 226, 224, 0.4);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-navbar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.9),
+    transparent
+  );
+  z-index: 1;
+}
+
+.glass-navbar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.8),
+    transparent,
+    rgba(255, 255, 255, 0.3)
+  );
+  z-index: 1;
+}
+
+/* Glass effect pentru mobile menu */
+.glass-mobile {
+  background: rgba(237, 226, 224, 0.35);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Custom shadows */
+.shadow-warm {
+  box-shadow: 0 10px 25px rgba(217, 119, 6, 0.1);
+}
+
+.shadow-warm-lg {
+  box-shadow: 0 20px 40px rgba(217, 119, 6, 0.15);
+}
+
+/* Responsive utilities */
+@media (max-width: 640px) {
+  .text-responsive-xl {
+    font-size: 2.5rem;
+    line-height: 1.2;
+  }
+}
+
+/* Animation for loading states */
+.pulse-slow {
+  animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Custom hover states for cards */
+.card-hover {
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.08), 0 6px 8px -5px rgba(0, 0, 0, 0.03);
+}
