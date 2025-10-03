@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Send, Calendar, User, Phone, Mail, ShoppingBag, CreditCard, CheckCircle } from 'lucide-react';
+import { useDarkMode } from '../contexts/DarkModeContext';
 import StripeCheckout from './StripeCheckout';
 import { formatAmount, convertToCents } from '../services/paymentService';
 
 const OrderForm: React.FC = () => {
+  const { isDarkMode } = useDarkMode();
   const [formData, setFormData] = useState({
     name: '',
     phone: '',

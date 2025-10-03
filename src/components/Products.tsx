@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Star, Heart } from 'lucide-react';
+import { useDarkMode } from '../contexts/DarkModeContext';
 
 const Products: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('toate');
+  const { isDarkMode } = useDarkMode();
 
   const categories = [
     { id: 'toate', name: 'Toate' },

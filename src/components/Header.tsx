@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Phone, MapPin, User, ShoppingCart, Settings } from 'lucide-react';
+import { Menu, X, Phone, MapPin, User, ShoppingCart, Settings, Moon, Sun } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import Auth from './Auth';
 import AdminDashboard from './AdminDashboard';
+import { useDarkMode } from '../contexts/DarkModeContext';
 
 const Header: React.FC = () => {
   const location = useLocation();
@@ -12,6 +13,7 @@ const Header: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showAdminDashboard, setShowAdminDashboard] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const { isDarkMode, toggleDarkMode } = useDarkMode();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,8 +44,12 @@ const Header: React.FC = () => {
     // }`}>
     <header className={`fixed top-0 w-full z-50 transition-all duration-500 ${
       isScrolled 
-        ? 'bg-[#ede2e0]/90 backdrop-blur-2xl backdrop-saturate-200 shadow-[0_2px_16px_rgba(237,226,224,0.4)]' 
-        : 'bg-gradient-to-b from-[#ede2e0]/70 to-transparent backdrop-blur-md'
+        ? isDarkMode 
+          ? 'bg-slate-900/90 backdrop-blur-2xl backdrop-saturate-200 shadow-[0_2px_16px_rgba(0,0,0,0.4)]' 
+          : 'bg-[#ede2e0]/90 backdrop-blur-2xl backdrop-saturate-200 shadow-[0_2px_16px_rgba(237,226,224,0.4)]'
+        : isDarkMode
+          ? 'bg-gradient-to-b from-slate-900/70 to-transparent backdrop-blur-md'
+          : 'bg-gradient-to-b from-[#ede2e0]/70 to-transparent backdrop-blur-md'
     }`}>
       {/* Top info bar cu glass effect */}
       {/* STILUL GLASS PENTRU TOP BAR - DACĂ VREI SĂ ÎNCERCI DIN NOU:
@@ -56,15 +62,21 @@ const Header: React.FC = () => {
       <div className={`transition-all duration-500 ${
         isScrolled 
           ? 'h-0 opacity-0 overflow-hidden' 
-          : 'h-auto opacity-100 bg-gradient-to-r from-[#ede2e0]/30 to-[#ede2e0]/20 backdrop-blur-xl'
+          : isDarkMode
+            ? 'h-auto opacity-100 bg-gradient-to-r from-slate-800/30 to-slate-800/20 backdrop-blur-xl'
+            : 'h-auto opacity-100 bg-gradient-to-r from-[#ede2e0]/30 to-[#ede2e0]/20 backdrop-blur-xl'
       }`}>
         <div className="py-2 text-sm">
           <div className="container mx-auto px-4 flex justify-center items-center space-x-6">
-            <div className="flex items-center space-x-2 text-amber-600 font-medium">
+            <div className={`flex items-center space-x-2 font-medium ${
+              isDarkMode ? 'text-amber-400' : 'text-amber-600'
+            }`}>
               <Phone className="h-3.5 w-3.5" />
               <span>0230 123 456</span>
             </div>
-            <div className="flex items-center space-x-2 text-amber-600 font-medium">
+            <div className={`flex items-center space-x-2 font-medium ${
+              isDarkMode ? 'text-amber-400' : 'text-amber-600'
+            }`}>
               <MapPin className="h-3.5 w-3.5" />
               <span>Suceava, Str. Stefan cel Mare nr. 15</span>
             </div>
@@ -85,8 +97,12 @@ const Header: React.FC = () => {
               />
               <h1 className={`text-3xl md:text-4xl lg:text-5xl font-serif font-bold transition-all duration-200 group-hover:scale-102 ${
                 isScrolled 
-                  ? 'text-amber-700 group-hover:text-amber-800' 
-                  : 'text-amber-600 drop-shadow-[0_2px_4px_rgba(255,255,255,0.8)] group-hover:text-amber-700'
+                  ? isDarkMode
+                    ? 'text-amber-400 group-hover:text-amber-300'
+                    : 'text-amber-700 group-hover:text-amber-800'
+                  : isDarkMode
+                    ? 'text-amber-400 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] group-hover:text-amber-300'
+                    : 'text-amber-600 drop-shadow-[0_2px_4px_rgba(255,255,255,0.8)] group-hover:text-amber-700'
               }`}>
                 Cristine de casă
               </h1>
@@ -103,11 +119,19 @@ const Header: React.FC = () => {
                     className={`relative px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
                       isActive
                         ? isScrolled
-                          ? 'text-amber-700 bg-amber-100/60'
-                          : 'text-amber-600 bg-[#ede2e0]/30'
+                          ? isDarkMode
+                            ? 'text-amber-400 bg-amber-900/60'
+                            : 'text-amber-700 bg-amber-100/60'
+                          : isDarkMode
+                            ? 'text-amber-400 bg-slate-800/30'
+                            : 'text-amber-600 bg-[#ede2e0]/30'
                         : isScrolled
-                          ? 'text-amber-500 hover:text-amber-700 hover:bg-[#ede2e0]/40'
-                          : 'text-amber-500 hover:text-amber-600 hover:bg-[#ede2e0]/20'
+                          ? isDarkMode
+                            ? 'text-amber-500 hover:text-amber-300 hover:bg-slate-800/40'
+                            : 'text-amber-500 hover:text-amber-700 hover:bg-[#ede2e0]/40'
+                          : isDarkMode
+                            ? 'text-amber-500 hover:text-amber-400 hover:bg-slate-800/20'
+                            : 'text-amber-500 hover:text-amber-600 hover:bg-[#ede2e0]/20'
                     }`}
                   >
                     <span className="relative z-10">{item.name}</span>
@@ -122,8 +146,27 @@ const Header: React.FC = () => {
               
               {/* Divider */}
               <div className={`w-px h-6 mx-2 ${
-                isScrolled ? 'bg-gray-300' : 'bg-[#ede2e0]/40'
+                isScrolled 
+                  ? isDarkMode ? 'bg-slate-600' : 'bg-gray-300'
+                  : isDarkMode ? 'bg-slate-700/40' : 'bg-[#ede2e0]/40'
               }`} />
+              
+              {/* Dark Mode Toggle */}
+              <button
+                onClick={toggleDarkMode}
+                className={`p-2.5 rounded-xl transition-all duration-200 ${
+                  isScrolled 
+                    ? isDarkMode
+                      ? 'text-amber-400 hover:text-amber-300 hover:bg-slate-800/60'
+                      : 'text-amber-500 hover:text-amber-700 hover:bg-amber-50/60'
+                    : isDarkMode
+                      ? 'text-amber-400 hover:text-amber-300 hover:bg-slate-800/20'
+                      : 'text-amber-500 hover:text-amber-600 hover:bg-[#ede2e0]/20'
+                }`}
+                title={isDarkMode ? 'Trece la modul de zi' : 'Trece la modul de noapte'}
+              >
+                {isDarkMode ? <Sun className="h-4.5 w-4.5" /> : <Moon className="h-4.5 w-4.5" />}
+              </button>
               
               {/* Auth Buttons */}
               <div className="flex items-center space-x-2">
@@ -131,15 +174,23 @@ const Header: React.FC = () => {
                   <>
                     <button className={`p-2.5 rounded-xl transition-all duration-200 ${
                       isScrolled 
-                        ? 'text-amber-500 hover:text-amber-700 hover:bg-amber-50/60' 
-                        : 'text-amber-500 hover:text-amber-600 hover:bg-[#ede2e0]/20'
+                        ? isDarkMode
+                          ? 'text-amber-400 hover:text-amber-300 hover:bg-slate-800/60'
+                          : 'text-amber-500 hover:text-amber-700 hover:bg-amber-50/60'
+                        : isDarkMode
+                          ? 'text-amber-400 hover:text-amber-300 hover:bg-slate-800/20'
+                          : 'text-amber-500 hover:text-amber-600 hover:bg-[#ede2e0]/20'
                     }`}>
                       <ShoppingCart className="h-4.5 w-4.5" />
                     </button>
                     <button className={`p-2.5 rounded-xl transition-all duration-200 ${
                       isScrolled 
-                        ? 'text-amber-500 hover:text-amber-700 hover:bg-amber-50/60' 
-                        : 'text-amber-500 hover:text-amber-600 hover:bg-[#ede2e0]/20'
+                        ? isDarkMode
+                          ? 'text-amber-400 hover:text-amber-300 hover:bg-slate-800/60'
+                          : 'text-amber-500 hover:text-amber-700 hover:bg-amber-50/60'
+                        : isDarkMode
+                          ? 'text-amber-400 hover:text-amber-300 hover:bg-slate-800/20'
+                          : 'text-amber-500 hover:text-amber-600 hover:bg-[#ede2e0]/20'
                     }`}>
                       <User className="h-4.5 w-4.5" />
                     </button>
@@ -148,8 +199,12 @@ const Header: React.FC = () => {
                         onClick={() => setShowAdminDashboard(true)}
                         className={`p-2.5 rounded-xl transition-all duration-200 ${
                           isScrolled 
-                            ? 'text-amber-500 hover:text-amber-700 hover:bg-amber-50/60' 
-                            : 'text-amber-500 hover:text-amber-600 hover:bg-[#ede2e0]/20'
+                            ? isDarkMode
+                              ? 'text-amber-400 hover:text-amber-300 hover:bg-slate-800/60'
+                              : 'text-amber-500 hover:text-amber-700 hover:bg-amber-50/60'
+                            : isDarkMode
+                              ? 'text-amber-400 hover:text-amber-300 hover:bg-slate-800/20'
+                              : 'text-amber-500 hover:text-amber-600 hover:bg-[#ede2e0]/20'
                         }`}
                         title="Dashboard Admin"
                       >
@@ -162,8 +217,12 @@ const Header: React.FC = () => {
                     onClick={() => setShowAuth(true)}
                     className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 transform hover:scale-102 ${
                       isScrolled
-                        ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-lg shadow-amber-500/25 hover:shadow-xl hover:shadow-amber-500/30'
-                        : 'bg-[#ede2e0]/30 text-amber-600 backdrop-blur-xl border border-amber-300/50 hover:bg-amber-100/50'
+                        ? isDarkMode
+                          ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-lg shadow-amber-500/25 hover:shadow-xl hover:shadow-amber-500/30'
+                          : 'bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-lg shadow-amber-500/25 hover:shadow-xl hover:shadow-amber-500/30'
+                        : isDarkMode
+                          ? 'bg-slate-800/30 text-amber-400 backdrop-blur-xl border border-amber-500/50 hover:bg-slate-700/50'
+                          : 'bg-[#ede2e0]/30 text-amber-600 backdrop-blur-xl border border-amber-300/50 hover:bg-amber-100/50'
                     }`}
                   >
                     Conectare
@@ -176,8 +235,12 @@ const Header: React.FC = () => {
             <button
               className={`md:hidden p-2 rounded-lg transition-all duration-200 ${
                 isScrolled 
-                  ? 'text-amber-600 hover:bg-amber-100' 
-                  : 'text-amber-500 hover:bg-[#ede2e0]/20'
+                  ? isDarkMode
+                    ? 'text-amber-400 hover:bg-slate-800/60'
+                    : 'text-amber-600 hover:bg-amber-100'
+                  : isDarkMode
+                    ? 'text-amber-400 hover:bg-slate-800/20'
+                    : 'text-amber-500 hover:bg-[#ede2e0]/20'
               }`}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
@@ -195,7 +258,11 @@ const Header: React.FC = () => {
           {/* STILUL GLASS PENTRU MOBILE MENU - DACĂ VREI SĂ ÎNCERCI DIN NOU:
           <div className="glass-mobile border-t border-white/20 shadow-2xl">
           */}
-          <div className="bg-[#ede2e0]/95 backdrop-blur-2xl backdrop-saturate-200 border-t border-[#ede2e0]/30 shadow-2xl">
+          <div className={`backdrop-blur-2xl backdrop-saturate-200 border-t shadow-2xl ${
+            isDarkMode 
+              ? 'bg-slate-900/95 border-slate-700/30' 
+              : 'bg-[#ede2e0]/95 border-[#ede2e0]/30'
+          }`}>
             <div className="py-4 px-4 space-y-1">
               {menuItems.map((item) => {
                 const isActive = location.pathname === item.path;
@@ -205,8 +272,12 @@ const Header: React.FC = () => {
                     to={item.path}
                     className={`block w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
                       isActive
-                        ? 'bg-gradient-to-r from-[#ede2e0]/40 to-[#ede2e0]/30 text-gray-800 backdrop-blur-xl'
-                        : 'text-gray-600 hover:bg-[#ede2e0]/30 hover:text-gray-800'
+                        ? isDarkMode
+                          ? 'bg-gradient-to-r from-slate-800/40 to-slate-800/30 text-amber-400 backdrop-blur-xl'
+                          : 'bg-gradient-to-r from-[#ede2e0]/40 to-[#ede2e0]/30 text-gray-800 backdrop-blur-xl'
+                        : isDarkMode
+                          ? 'text-slate-300 hover:bg-slate-800/30 hover:text-amber-400'
+                          : 'text-gray-600 hover:bg-[#ede2e0]/30 hover:text-gray-800'
                     }`}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
@@ -214,6 +285,18 @@ const Header: React.FC = () => {
                   </Link>
                 );
               })}
+              
+              {/* Dark Mode Toggle for Mobile */}
+              <button
+                onClick={toggleDarkMode}
+                className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                  isDarkMode
+                    ? 'text-amber-400 hover:bg-slate-800/30'
+                    : 'text-amber-600 hover:bg-[#ede2e0]/30'
+                }`}
+              >
+                {isDarkMode ? '☀️ Modul de zi' : '🌙 Modul de noapte'}
+              </button>
               
               {/* Mobile Auth Button */}
               {!isLoggedIn && (

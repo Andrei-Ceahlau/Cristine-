@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Edit, Trash2, Eye, Package, ShoppingCart, Users, TrendingUp, Settings } from 'lucide-react';
 import { useShop } from '../contexts/ShopContext';
+import { useDarkMode } from '../contexts/DarkModeContext';
 
 interface Product {
   id: number;
@@ -28,6 +29,7 @@ interface AdminDashboardProps {
 }
 
 const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
+  const { isDarkMode } = useDarkMode();
   const [activeTab, setActiveTab] = useState('dashboard');
 
   // Blochează scroll-ul când dashboard-ul este deschis
@@ -172,17 +174,21 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className={`min-h-screen ${isDarkMode ? 'bg-slate-900' : 'bg-gray-50'}`}>
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
+      <div className={`shadow-sm border-b ${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
-            <h1 className="text-2xl font-serif text-gray-800">Dashboard Admin</h1>
+            <h1 className={`text-2xl font-serif ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>Dashboard Admin</h1>
             <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-600">Admin</span>
+              <span className={`text-sm ${isDarkMode ? 'text-slate-300' : 'text-gray-600'}`}>Admin</span>
               <button 
                 onClick={onClose}
-                className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                className={`px-4 py-2 rounded-lg transition-colors ${
+                  isDarkMode 
+                    ? 'bg-slate-700 text-white hover:bg-slate-600' 
+                    : 'bg-gray-600 text-white hover:bg-gray-700'
+                }`}
               >
                 Închide Dashboard
               </button>

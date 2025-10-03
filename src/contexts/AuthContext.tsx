@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { onAuthStateChange, UserData, logoutUser } from '../services/authService';
+import { onAuthStateChange, AuthUser, logoutUser, loginUser, registerUser } from '../services';
 
 interface AuthContextType {
-  user: UserData | null;
+  user: AuthUser | null;
   isAdmin: boolean;
   loading: boolean;
   login: (email: string, password: string) => Promise<void>;
@@ -25,25 +25,24 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<UserData | null>(null);
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
 
   // Ascultă schimbările de autentificare
   useEffect(() => {
-    const unsubscribe = onAuthStateChange((userData) => {
+    const { data: { subscription } } = onAuthStateChange((userData: AuthUser | null) => {
       setUser(userData);
       setIsAdmin(userData?.isAdmin || false);
       setLoading(false);
     });
 
-    return () => unsubscribe();
+    return () => subscription.unsubscribe();
   }, []);
 
   const login = async (email: string, password: string) => {
     setLoading(true);
     try {
-      const { loginUser } = await import('../services/authService');
       await loginUser(email, password);
       // onAuthStateChange va actualiza automat user-ul
     } catch (error) {
@@ -55,7 +54,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const register = async (email: string, password: string, displayName?: string, phone?: string) => {
     setLoading(true);
     try {
-      const { registerUser } = await import('../services/authService');
       await registerUser(email, password, displayName, phone);
       // onAuthStateChange va actualiza automat user-ul
     } catch (error) {

@@ -1,16 +1,7 @@
-import { 
-  createUserWithEmailAndPassword, 
-  signInWithEmailAndPassword, 
-  signOut, 
-  onAuthStateChanged,
-  User,
-  updateProfile
-} from 'firebase/auth';
-import { doc, setDoc, getDoc } from 'firebase/firestore';
-import { auth, db } from '../config/firebase';
+import { supabase } from '../config/supabase';
 
-// Interfață pentru utilizator
-export interface UserData {
+// Interfață pentru utilizator (compatibilă cu codul existent)
+export interface AuthUser {
   uid: string;
   email: string;
   displayName?: string;
@@ -25,75 +16,115 @@ export const registerUser = async (
   password: string, 
   displayName?: string, 
   phone?: string
-): Promise<UserData> => {
+): Promise<AuthUser> => {
   try {
-    // Creează utilizatorul în Firebase Auth
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
+    // Creează utilizatorul în Supabase Auth
+    const { data: authData, error: authError } = await supabase.auth.signUp({
+      email,
+      password,
+    });
 
-    // Actualizează profilul utilizatorului
-    if (displayName) {
-      await updateProfile(user, { displayName });
-    }
+    if (authError) throw authError;
+    if (!authData.user) throw new Error('Eroare la crearea utilizatorului');
 
     // Verifică dacă este admin
     const isAdmin = email === 'admin@cofetaria-cristine.com';
 
-    // Creează documentul utilizatorului în Firestore
-    const userData: UserData = {
-      uid: user.uid,
-      email: user.email!,
-      displayName: displayName || user.displayName || '',
+    // Creează documentul utilizatorului în tabela users
+    const userData = {
+      id: authData.user.id,
+      email: authData.user.email!,
+      display_name: displayName || null,
+      phone: phone || null,
+      is_admin: isAdmin,
+      created_at: new Date().toISOString()
+    };
+
+    const { error: insertError } = await supabase
+      .from('users')
+      .insert(userData);
+
+    if (insertError) throw insertError;
+
+    return {
+      uid: authData.user.id,
+      email: authData.user.email!,
+      displayName: displayName || '',
       phone: phone || '',
       isAdmin,
       createdAt: new Date()
     };
-
-    await setDoc(doc(db, 'users', user.uid), userData);
-
-    return userData;
   } catch (error: any) {
     console.error('Error registering user:', error);
-    throw new Error(getAuthErrorMessage(error.code));
+    throw new Error(getAuthErrorMessage(error));
   }
 };
 
 // Funcție pentru login utilizator
-export const loginUser = async (email: string, password: string): Promise<UserData> => {
+export const loginUser = async (email: string, password: string): Promise<AuthUser> => {
   try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
+    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-    // Obține datele utilizatorului din Firestore
-    const userDoc = await getDoc(doc(db, 'users', user.uid));
-    
-    if (userDoc.exists()) {
-      return userDoc.data() as UserData;
-    } else {
+    if (authError) throw authError;
+    if (!authData.user) throw new Error('Eroare la autentificare');
+
+    // Obține datele utilizatorului din tabela users
+    const { data: userData, error: userError } = await supabase
+      .from('users')
+      .select('*')
+      .eq('id', authData.user.id)
+      .single();
+
+    if (userError) {
       // Dacă nu există documentul, creează-l
       const isAdmin = email === 'admin@cofetaria-cristine.com';
-      const userData: UserData = {
-        uid: user.uid,
-        email: user.email!,
-        displayName: user.displayName || '',
+      const newUserData = {
+        id: authData.user.id,
+        email: authData.user.email!,
+        display_name: null,
+        phone: null,
+        is_admin: isAdmin,
+        created_at: new Date().toISOString()
+      };
+
+      const { error: insertError } = await supabase
+        .from('users')
+        .insert(newUserData);
+
+      if (insertError) throw insertError;
+
+      return {
+        uid: authData.user.id,
+        email: authData.user.email!,
+        displayName: '',
         phone: '',
         isAdmin,
         createdAt: new Date()
       };
-
-      await setDoc(doc(db, 'users', user.uid), userData);
-      return userData;
     }
+
+    return {
+      uid: userData.id,
+      email: userData.email,
+      displayName: userData.display_name || '',
+      phone: userData.phone || '',
+      isAdmin: userData.is_admin,
+      createdAt: new Date(userData.created_at)
+    };
   } catch (error: any) {
     console.error('Error logging in user:', error);
-    throw new Error(getAuthErrorMessage(error.code));
+    throw new Error(getAuthErrorMessage(error));
   }
 };
 
 // Funcție pentru logout
 export const logoutUser = async (): Promise<void> => {
   try {
-    await signOut(auth);
+    const { error } = await supabase.auth.signOut();
+    if (error) throw error;
   } catch (error: any) {
     console.error('Error logging out user:', error);
     throw new Error('Eroare la deconectare. Încearcă din nou.');
@@ -101,32 +132,33 @@ export const logoutUser = async (): Promise<void> => {
 };
 
 // Funcție pentru a asculta schimbările de autentificare
-export const onAuthStateChange = (callback: (user: UserData | null) => void) => {
-  return onAuthStateChanged(auth, async (user: User | null) => {
-    if (user) {
+export const onAuthStateChange = (callback: (user: AuthUser | null) => void) => {
+  return supabase.auth.onAuthStateChange(async (_event, session) => {
+    if (session?.user) {
       try {
-        // Obține datele utilizatorului din Firestore
-        const userDoc = await getDoc(doc(db, 'users', user.uid));
-        
-        if (userDoc.exists()) {
-          callback(userDoc.data() as UserData);
-        } else {
-          // Dacă nu există documentul, creează-l
-          const isAdmin = user.email === 'admin@cofetaria-cristine.com';
-          const userData: UserData = {
-            uid: user.uid,
-            email: user.email!,
-            displayName: user.displayName || '',
-            phone: '',
-            isAdmin,
-            createdAt: new Date()
-          };
+        // Obține datele utilizatorului din tabela users
+        const { data: userData, error } = await supabase
+          .from('users')
+          .select('*')
+          .eq('id', session.user.id)
+          .single();
 
-          await setDoc(doc(db, 'users', user.uid), userData);
-          callback(userData);
+        if (error) {
+          console.error('Error getting user data:', error);
+          callback(null);
+          return;
         }
+
+        callback({
+          uid: userData.id,
+          email: userData.email,
+          displayName: userData.display_name || '',
+          phone: userData.phone || '',
+          isAdmin: userData.is_admin,
+          createdAt: new Date(userData.created_at)
+        });
       } catch (error) {
-        console.error('Error getting user data:', error);
+        console.error('Error processing auth state change:', error);
         callback(null);
       }
     } else {
@@ -136,49 +168,66 @@ export const onAuthStateChange = (callback: (user: UserData | null) => void) => 
 };
 
 // Funcție pentru a obține utilizatorul curent
-export const getCurrentUser = (): User | null => {
-  return auth.currentUser;
-};
-
-// Funcție pentru a obține datele utilizatorului curent din Firestore
-export const getCurrentUserData = async (): Promise<UserData | null> => {
-  const user = getCurrentUser();
-  if (!user) return null;
-
+export const getCurrentUser = async (): Promise<AuthUser | null> => {
   try {
-    const userDoc = await getDoc(doc(db, 'users', user.uid));
-    if (userDoc.exists()) {
-      return userDoc.data() as UserData;
-    }
-    return null;
+    const { data: { user } } = await supabase.auth.getUser();
+    
+    if (!user) return null;
+
+    const { data: userData, error } = await supabase
+      .from('users')
+      .select('*')
+      .eq('id', user.id)
+      .single();
+
+    if (error) return null;
+
+    return {
+      uid: userData.id,
+      email: userData.email,
+      displayName: userData.display_name || '',
+      phone: userData.phone || '',
+      isAdmin: userData.is_admin,
+      createdAt: new Date(userData.created_at)
+    };
   } catch (error) {
-    console.error('Error getting current user data:', error);
+    console.error('Error getting current user:', error);
     return null;
   }
 };
 
-// Funcție pentru traducerea erorilor Firebase
-const getAuthErrorMessage = (errorCode: string): string => {
-  switch (errorCode) {
-    case 'auth/email-already-in-use':
-      return 'Acest email este deja înregistrat.';
-    case 'auth/weak-password':
-      return 'Parola este prea slabă. Folosește cel puțin 6 caractere.';
-    case 'auth/invalid-email':
-      return 'Adresa de email nu este validă.';
-    case 'auth/user-not-found':
-      return 'Nu există un cont cu acest email.';
-    case 'auth/wrong-password':
-      return 'Parola este incorectă.';
-    case 'auth/too-many-requests':
-      return 'Prea multe încercări. Încearcă din nou mai târziu.';
-    case 'auth/network-request-failed':
-      return 'Eroare de rețea. Verifică conexiunea la internet.';
-    default:
-      return 'A apărut o eroare. Încearcă din nou.';
-  }
+// Funcție pentru a obține datele utilizatorului curent
+export const getCurrentUserData = async (): Promise<AuthUser | null> => {
+  return getCurrentUser();
 };
 
-
-
-
+// Funcție pentru traducerea erorilor Supabase
+const getAuthErrorMessage = (error: any): string => {
+  if (error.message) {
+    const message = error.message.toLowerCase();
+    
+    if (message.includes('email already registered') || message.includes('already registered')) {
+      return 'Acest email este deja înregistrat.';
+    }
+    if (message.includes('password') && message.includes('weak')) {
+      return 'Parola este prea slabă. Folosește cel puțin 6 caractere.';
+    }
+    if (message.includes('invalid email') || message.includes('email')) {
+      return 'Adresa de email nu este validă.';
+    }
+    if (message.includes('user not found') || message.includes('not found')) {
+      return 'Nu există un cont cu acest email.';
+    }
+    if (message.includes('wrong password') || message.includes('invalid password')) {
+      return 'Parola este incorectă.';
+    }
+    if (message.includes('too many requests')) {
+      return 'Prea multe încercări. Încearcă din nou mai târziu.';
+    }
+    if (message.includes('network') || message.includes('connection')) {
+      return 'Eroare de rețea. Verifică conexiunea la internet.';
+    }
+  }
+  
+  return 'A apărut o eroare. Încearcă din nou.';
+};

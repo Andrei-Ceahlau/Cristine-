@@ -38,7 +38,7 @@ interface CustomerResponse {
 }
 
 // Simulare API pentru Payment Intent
-export const createPaymentIntent = async (request: PaymentIntentRequest): Promise<PaymentIntentResponse> => {
+export const createPaymentIntent = async (_request: PaymentIntentRequest): Promise<PaymentIntentResponse> => {
   // În producție, aceasta ar face un request către backend-ul tău
   // care ar crea Payment Intent-ul în Stripe
   
@@ -61,7 +61,7 @@ export const createPaymentIntent = async (request: PaymentIntentRequest): Promis
 };
 
 // Simulare API pentru Setup Intent
-export const createSetupIntent = async (request: SetupIntentRequest): Promise<SetupIntentResponse> => {
+export const createSetupIntent = async (_request: SetupIntentRequest): Promise<SetupIntentResponse> => {
   try {
     await new Promise(resolve => setTimeout(resolve, 1000));
     
@@ -78,7 +78,7 @@ export const createSetupIntent = async (request: SetupIntentRequest): Promise<Se
 };
 
 // Simulare API pentru Customer
-export const createCustomer = async (request: CustomerRequest): Promise<CustomerResponse> => {
+export const createCustomer = async (_request: CustomerRequest): Promise<CustomerResponse> => {
   try {
     await new Promise(resolve => setTimeout(resolve, 1000));
     
@@ -132,7 +132,7 @@ export const handleWebhook = async (event: any): Promise<void> => {
 };
 
 // Funcție pentru a obține statusul unei plăți
-export const getPaymentStatus = async (paymentIntentId: string): Promise<{ status: string }> => {
+export const getPaymentStatus = async (_paymentIntentId: string): Promise<{ status: string }> => {
   try {
     await new Promise(resolve => setTimeout(resolve, 500));
     
@@ -148,7 +148,7 @@ export const getPaymentStatus = async (paymentIntentId: string): Promise<{ statu
 };
 
 // Funcție pentru a obține istoricul plăților unui customer
-export const getCustomerPayments = async (customerId: string): Promise<any[]> => {
+export const getCustomerPayments = async (_customerId: string): Promise<any[]> => {
   try {
     await new Promise(resolve => setTimeout(resolve, 1000));
     
@@ -180,7 +180,7 @@ export const getCustomerPayments = async (customerId: string): Promise<any[]> =>
 };
 
 // Funcție pentru a obține informații despre taxe
-export const getTaxInformation = (amount: number, country: string = 'RO'): { tax: number; total: number } => {
+export const getTaxInformation = (amount: number, _country: string = 'RO'): { tax: number; total: number } => {
   // Simulare calcul taxe pentru România (TVA 19%)
   const taxRate = 0.19;
   const tax = Math.round(amount * taxRate);
@@ -270,6 +270,10 @@ export const getTestCodes = (): { [key: string]: string } => {
     'country': 'US'
   };
 };
+
+
+
+
 
 
 

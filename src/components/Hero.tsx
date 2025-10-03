@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowDown, ShoppingCart } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useDarkMode } from '../contexts/DarkModeContext';
 
 const Hero: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const { isDarkMode } = useDarkMode();
 
   useEffect(() => {
     setIsVisible(true);
@@ -16,12 +18,16 @@ const Hero: React.FC = () => {
         {/* Background Image */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url('https://images.pexels.com/photos/1721932/pexels-photo-1721932.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop')`
+        style={{
+            backgroundImage: `url('/imagini-prezentare/exterior.jpeg')`
           }}
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-amber-50/20 via-transparent to-amber-100/30"></div>
-        </div>
+          <div className={`absolute inset-0 ${
+            isDarkMode 
+              ? 'bg-gradient-to-r from-slate-900/40 via-slate-800/20 to-slate-900/50'
+              : 'bg-gradient-to-r from-amber-50/20 via-transparent to-amber-100/30'
+          }`}></div>
+      </div>
 
         {/* Content Layout - Stil Mara Mura */}
         <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
@@ -33,25 +39,25 @@ const Hero: React.FC = () => {
             }`}>
               {/* Logo */}
               <div className="flex items-center space-x-4">
-                <img 
-                  src="/logo/Cristine-Logo (1).jpg" 
-                  alt="Cristine de casă" 
+            <img 
+              src="/logo/Cristine-Logo (1).jpg" 
+              alt="Cristine de casă" 
                   className="h-16 w-16 md:h-20 md:w-20 rounded-full object-cover shadow-xl border-4 border-amber-200"
                 />
                 <div>
-                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-gray-800">
+                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white">
                     Cristine de casă
                   </h1>
-                  <p className="text-lg text-amber-600 font-medium">Deserturi artizanale din Suceava</p>
+                  <p className="text-lg font-medium text-white">Deserturi artizanale din Suceava</p>
                 </div>
               </div>
 
               {/* Main Title */}
               <div>
-                <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-gray-800 leading-tight">
+                <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold leading-tight text-white">
                   Tort Cipriani
                 </h2>
-                <p className="text-xl text-gray-600 mt-4">
+                <p className="text-xl mt-4 text-white">
                   Comandă online
                 </p>
               </div>
@@ -60,7 +66,11 @@ const Hero: React.FC = () => {
               <div className="pt-4">
                 <Link 
                   to="/shop"
-                  className="inline-flex items-center justify-center bg-gray-900 hover:bg-gray-800 text-white px-8 py-4 text-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg"
+                  className={`inline-flex items-center justify-center px-8 py-4 text-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg ${
+                    isDarkMode
+                      ? 'bg-amber-600 hover:bg-amber-700 text-white shadow-amber-600/25'
+                      : 'bg-gray-900 hover:bg-gray-800 text-white'
+                  }`}
                 >
                   <ShoppingCart className="h-5 w-5 mr-2" />
                   Descoperă
@@ -76,8 +86,12 @@ const Hero: React.FC = () => {
                 {/* Main Product Image */}
                 <div className="relative overflow-hidden rounded-2xl shadow-2xl">
                   <img
-                    src="https://images.pexels.com/photos/1721932/pexels-photo-1721932.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop"
-                    alt="Tort Cipriani"
+                    src={
+                      isDarkMode 
+                        ? "/imagini-prezentare/ChatGPT Image 2 oct. 2025, 15_16_44.png"
+                        : "/imagini-prezentare/gradina.jpeg"
+                    }
+                    alt="Grădina Cristine de casă"
                     className="w-full h-96 lg:h-[500px] object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
@@ -94,14 +108,20 @@ const Hero: React.FC = () => {
         {/* Scroll Indicator */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
           <div className="flex flex-col items-center space-y-2">
-            <span className="text-gray-600 text-sm font-medium">Scroll pentru mai mult</span>
-            <ArrowDown className="h-5 w-5 text-gray-600 animate-bounce" />
+            <span className={`text-sm font-medium ${
+              isDarkMode ? 'text-gray-300' : 'text-gray-600'
+            }`}>Scroll pentru mai mult</span>
+            <ArrowDown className={`h-5 w-5 animate-bounce ${
+              isDarkMode ? 'text-gray-300' : 'text-gray-600'
+            }`} />
           </div>
         </div>
       </div>
 
       {/* Product Categories Grid - Stil Mara Mura */}
-      <div className="py-16 bg-white">
+      <div className={`py-16 ${
+        isDarkMode ? 'bg-slate-900' : 'bg-white'
+      }`}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             
@@ -109,7 +129,7 @@ const Hero: React.FC = () => {
             <div className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
               <div className="relative h-80 bg-gradient-to-br from-amber-100 to-orange-100">
                 <img
-                  src="https://images.pexels.com/photos/1721932/pexels-photo-1721932.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop"
+                  src="/imagini-prezentare/tort talent.jpeg"
                   alt="Torturi"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -120,7 +140,11 @@ const Hero: React.FC = () => {
                 <p className="text-white/90 mb-4">Comandă online</p>
                 <Link 
                   to="/shop"
-                  className="inline-flex items-center justify-center bg-white text-gray-900 px-6 py-3 font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-200"
+                  className={`inline-flex items-center justify-center px-6 py-3 font-semibold rounded-lg transition-colors duration-200 ${
+                    isDarkMode 
+                      ? 'bg-slate-800 text-white hover:bg-slate-700' 
+                      : 'bg-white text-gray-900 hover:bg-gray-100'
+                  }`}
                 >
                   Descoperă
                 </Link>
@@ -131,7 +155,7 @@ const Hero: React.FC = () => {
             <div className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
               <div className="relative h-80 bg-gradient-to-br from-rose-100 to-pink-100">
                 <img
-                  src="https://images.pexels.com/photos/2067569/pexels-photo-2067569.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop"
+                  src="/imagini-prezentare/a3a.jpeg"
                   alt="Choux"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -142,7 +166,11 @@ const Hero: React.FC = () => {
                 <p className="text-white/90 mb-4">Comandă online</p>
                 <Link 
                   to="/shop"
-                  className="inline-flex items-center justify-center bg-white text-gray-900 px-6 py-3 font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-200"
+                  className={`inline-flex items-center justify-center px-6 py-3 font-semibold rounded-lg transition-colors duration-200 ${
+                    isDarkMode 
+                      ? 'bg-slate-800 text-white hover:bg-slate-700' 
+                      : 'bg-white text-gray-900 hover:bg-gray-100'
+                  }`}
                 >
                   Descoperă
                 </Link>
@@ -153,7 +181,7 @@ const Hero: React.FC = () => {
             <div className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
               <div className="relative h-80 bg-gradient-to-br from-blue-100 to-cyan-100">
                 <img
-                  src="https://images.pexels.com/photos/2067638/pexels-photo-2067638.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop"
+                  src="/imagini-prezentare/a4a.jpeg"
                   alt="Tarte"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -164,7 +192,11 @@ const Hero: React.FC = () => {
                 <p className="text-white/90 mb-4">Comandă online</p>
                 <Link 
                   to="/shop"
-                  className="inline-flex items-center justify-center bg-white text-gray-900 px-6 py-3 font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-200"
+                  className={`inline-flex items-center justify-center px-6 py-3 font-semibold rounded-lg transition-colors duration-200 ${
+                    isDarkMode 
+                      ? 'bg-slate-800 text-white hover:bg-slate-700' 
+                      : 'bg-white text-gray-900 hover:bg-gray-100'
+                  }`}
                 >
                   Descoperă
                 </Link>
@@ -175,7 +207,7 @@ const Hero: React.FC = () => {
             <div className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
               <div className="relative h-80 bg-gradient-to-br from-green-100 to-emerald-100">
                 <img
-                  src="https://images.pexels.com/photos/1059905/pexels-photo-1059905.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop"
+                  src="/imagini-prezentare/a5a.jpeg"
                   alt="Prăjituri clasice"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -186,7 +218,11 @@ const Hero: React.FC = () => {
                 <p className="text-white/90 mb-4">Comandă online</p>
                 <Link 
                   to="/shop"
-                  className="inline-flex items-center justify-center bg-white text-gray-900 px-6 py-3 font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-200"
+                  className={`inline-flex items-center justify-center px-6 py-3 font-semibold rounded-lg transition-colors duration-200 ${
+                    isDarkMode 
+                      ? 'bg-slate-800 text-white hover:bg-slate-700' 
+                      : 'bg-white text-gray-900 hover:bg-gray-100'
+                  }`}
                 >
                   Descoperă
                 </Link>
@@ -197,7 +233,7 @@ const Hero: React.FC = () => {
             <div className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
               <div className="relative h-80 bg-gradient-to-br from-purple-100 to-violet-100">
                 <img
-                  src="https://images.pexels.com/photos/2067402/pexels-photo-2067402.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop"
+                  src="/imagini-prezentare/a 2 a.jpeg"
                   alt="Specialități"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -206,20 +242,24 @@ const Hero: React.FC = () => {
               <div className="absolute bottom-6 left-6 right-6">
                 <h3 className="text-2xl font-serif font-bold text-white mb-2">Specialități</h3>
                 <p className="text-white/90 mb-4">Comandă online</p>
-                <Link 
-                  to="/shop"
-                  className="inline-flex items-center justify-center bg-white text-gray-900 px-6 py-3 font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-200"
-                >
+          <Link 
+            to="/shop"
+                  className={`inline-flex items-center justify-center px-6 py-3 font-semibold rounded-lg transition-colors duration-200 ${
+                    isDarkMode 
+                      ? 'bg-slate-800 text-white hover:bg-slate-700' 
+                      : 'bg-white text-gray-900 hover:bg-gray-100'
+                  }`}
+          >
                   Descoperă
-                </Link>
-              </div>
-            </div>
+          </Link>
+        </div>
+      </div>
 
             {/* Sugar Free Card */}
             <div className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
               <div className="relative h-80 bg-gradient-to-br from-teal-100 to-cyan-100">
                 <img
-                  src="https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop"
+                  src="/imagini-prezentare/WhatsApp Image 2025-09-26 at 12.35.30.jpeg"
                   alt="Sugar Free"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -230,7 +270,11 @@ const Hero: React.FC = () => {
                 <p className="text-white/90 mb-4">Comandă online</p>
                 <Link 
                   to="/shop"
-                  className="inline-flex items-center justify-center bg-white text-gray-900 px-6 py-3 font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-200"
+                  className={`inline-flex items-center justify-center px-6 py-3 font-semibold rounded-lg transition-colors duration-200 ${
+                    isDarkMode 
+                      ? 'bg-slate-800 text-white hover:bg-slate-700' 
+                      : 'bg-white text-gray-900 hover:bg-gray-100'
+                  }`}
                 >
                   Descoperă
                 </Link>

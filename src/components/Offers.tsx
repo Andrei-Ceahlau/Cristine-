@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, Calendar, Gift, Star, Sparkles, Clock, Heart, ShoppingCart } from 'lucide-react';
+import { useDarkMode } from '../contexts/DarkModeContext';
 
 const Offers: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const sectionRef = useRef<HTMLElement>(null);
+  const { isDarkMode } = useDarkMode();
 
   const offers = [
     {

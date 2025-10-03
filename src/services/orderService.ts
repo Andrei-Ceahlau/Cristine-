@@ -1,17 +1,4 @@
-import { 
-  collection, 
-  addDoc, 
-  updateDoc, 
-  deleteDoc, 
-  doc, 
-  getDocs, 
-  getDoc,
-  query,
-  where,
-  orderBy,
-  Timestamp 
-} from 'firebase/firestore';
-import { db } from '../config/firebase';
+import { supabase } from '../config/supabase';
 
 // Interfață pentru element din comandă
 export interface OrderItem {
@@ -36,8 +23,8 @@ export interface Order {
   deliveryDate?: string;
   deliveryTime?: string;
   notes?: string;
-  createdAt?: Timestamp;
-  updatedAt?: Timestamp;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 // Funcție pentru a crea o comandă nouă
@@ -45,12 +32,18 @@ export const createOrder = async (order: Omit<Order, 'id' | 'createdAt' | 'updat
   try {
     const orderData = {
       ...order,
-      createdAt: Timestamp.now(),
-      updatedAt: Timestamp.now()
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
     };
     
-    const docRef = await addDoc(collection(db, 'orders'), orderData);
-    return docRef.id;
+    const { data, error } = await supabase
+      .from('orders')
+      .insert(orderData)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data.id;
   } catch (error) {
     console.error('Error creating order:', error);
     throw error;
@@ -60,13 +53,17 @@ export const createOrder = async (order: Omit<Order, 'id' | 'createdAt' | 'updat
 // Funcție pentru a actualiza o comandă
 export const updateOrder = async (id: string, order: Partial<Order>): Promise<void> => {
   try {
-    const orderRef = doc(db, 'orders', id);
     const updateData = {
       ...order,
-      updatedAt: Timestamp.now()
+      updated_at: new Date().toISOString()
     };
     
-    await updateDoc(orderRef, updateData);
+    const { error } = await supabase
+      .from('orders')
+      .update(updateData)
+      .eq('id', id);
+
+    if (error) throw error;
   } catch (error) {
     console.error('Error updating order:', error);
     throw error;
@@ -76,8 +73,12 @@ export const updateOrder = async (id: string, order: Partial<Order>): Promise<vo
 // Funcție pentru a șterge o comandă
 export const deleteOrder = async (id: string): Promise<void> => {
   try {
-    const orderRef = doc(db, 'orders', id);
-    await deleteDoc(orderRef);
+    const { error } = await supabase
+      .from('orders')
+      .delete()
+      .eq('id', id);
+
+    if (error) throw error;
   } catch (error) {
     console.error('Error deleting order:', error);
     throw error;
@@ -87,22 +88,29 @@ export const deleteOrder = async (id: string): Promise<void> => {
 // Funcție pentru a obține toate comenzile (pentru admin)
 export const getAllOrders = async (): Promise<Order[]> => {
   try {
-    const q = query(
-      collection(db, 'orders'),
-      orderBy('createdAt', 'desc')
-    );
+    const { data, error } = await supabase
+      .from('orders')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
     
-    const querySnapshot = await getDocs(q);
-    const orders: Order[] = [];
-    
-    querySnapshot.forEach((doc) => {
-      orders.push({
-        id: doc.id,
-        ...doc.data()
-      } as Order);
-    });
-    
-    return orders;
+    return data.map(order => ({
+      id: order.id,
+      userId: order.user_id,
+      userEmail: order.user_email,
+      userName: order.user_name,
+      userPhone: order.user_phone,
+      items: order.items,
+      totalAmount: order.total_amount,
+      status: order.status,
+      deliveryAddress: order.delivery_address,
+      deliveryDate: order.delivery_date,
+      deliveryTime: order.delivery_time,
+      notes: order.notes,
+      createdAt: order.created_at,
+      updatedAt: order.updated_at
+    }));
   } catch (error) {
     console.error('Error getting orders:', error);
     throw error;
@@ -112,23 +120,30 @@ export const getAllOrders = async (): Promise<Order[]> => {
 // Funcție pentru a obține comenzile unui utilizator
 export const getUserOrders = async (userId: string): Promise<Order[]> => {
   try {
-    const q = query(
-      collection(db, 'orders'),
-      where('userId', '==', userId),
-      orderBy('createdAt', 'desc')
-    );
+    const { data, error } = await supabase
+      .from('orders')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
     
-    const querySnapshot = await getDocs(q);
-    const orders: Order[] = [];
-    
-    querySnapshot.forEach((doc) => {
-      orders.push({
-        id: doc.id,
-        ...doc.data()
-      } as Order);
-    });
-    
-    return orders;
+    return data.map(order => ({
+      id: order.id,
+      userId: order.user_id,
+      userEmail: order.user_email,
+      userName: order.user_name,
+      userPhone: order.user_phone,
+      items: order.items,
+      totalAmount: order.total_amount,
+      status: order.status,
+      deliveryAddress: order.delivery_address,
+      deliveryDate: order.delivery_date,
+      deliveryTime: order.delivery_time,
+      notes: order.notes,
+      createdAt: order.created_at,
+      updatedAt: order.updated_at
+    }));
   } catch (error) {
     console.error('Error getting user orders:', error);
     throw error;
@@ -138,17 +153,33 @@ export const getUserOrders = async (userId: string): Promise<Order[]> => {
 // Funcție pentru a obține o comandă după ID
 export const getOrderById = async (id: string): Promise<Order | null> => {
   try {
-    const orderRef = doc(db, 'orders', id);
-    const orderSnap = await getDoc(orderRef);
-    
-    if (orderSnap.exists()) {
-      return {
-        id: orderSnap.id,
-        ...orderSnap.data()
-      } as Order;
-    } else {
-      return null;
+    const { data, error } = await supabase
+      .from('orders')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (error) {
+      if (error.code === 'PGRST116') return null; // No rows found
+      throw error;
     }
+    
+    return {
+      id: data.id,
+      userId: data.user_id,
+      userEmail: data.user_email,
+      userName: data.user_name,
+      userPhone: data.user_phone,
+      items: data.items,
+      totalAmount: data.total_amount,
+      status: data.status,
+      deliveryAddress: data.delivery_address,
+      deliveryDate: data.delivery_date,
+      deliveryTime: data.delivery_time,
+      notes: data.notes,
+      createdAt: data.created_at,
+      updatedAt: data.updated_at
+    };
   } catch (error) {
     console.error('Error getting order:', error);
     throw error;
@@ -158,23 +189,30 @@ export const getOrderById = async (id: string): Promise<Order | null> => {
 // Funcție pentru a obține comenzile după status
 export const getOrdersByStatus = async (status: Order['status']): Promise<Order[]> => {
   try {
-    const q = query(
-      collection(db, 'orders'),
-      where('status', '==', status),
-      orderBy('createdAt', 'desc')
-    );
+    const { data, error } = await supabase
+      .from('orders')
+      .select('*')
+      .eq('status', status)
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
     
-    const querySnapshot = await getDocs(q);
-    const orders: Order[] = [];
-    
-    querySnapshot.forEach((doc) => {
-      orders.push({
-        id: doc.id,
-        ...doc.data()
-      } as Order);
-    });
-    
-    return orders;
+    return data.map(order => ({
+      id: order.id,
+      userId: order.user_id,
+      userEmail: order.user_email,
+      userName: order.user_name,
+      userPhone: order.user_phone,
+      items: order.items,
+      totalAmount: order.total_amount,
+      status: order.status,
+      deliveryAddress: order.delivery_address,
+      deliveryDate: order.delivery_date,
+      deliveryTime: order.delivery_time,
+      notes: order.notes,
+      createdAt: order.created_at,
+      updatedAt: order.updated_at
+    }));
   } catch (error) {
     console.error('Error getting orders by status:', error);
     throw error;
@@ -184,23 +222,17 @@ export const getOrdersByStatus = async (status: Order['status']): Promise<Order[
 // Funcție pentru a actualiza statusul unei comenzi
 export const updateOrderStatus = async (id: string, status: Order['status']): Promise<void> => {
   try {
-    const orderRef = doc(db, 'orders', id);
-    await updateDoc(orderRef, {
-      status,
-      updatedAt: Timestamp.now()
-    });
+    const { error } = await supabase
+      .from('orders')
+      .update({ 
+        status,
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', id);
+
+    if (error) throw error;
   } catch (error) {
     console.error('Error updating order status:', error);
     throw error;
   }
 };
-
-
-
-
-
-
-
-
-
-

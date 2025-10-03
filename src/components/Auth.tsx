@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Eye, EyeOff, Mail, Lock, User, Phone } from 'lucide-react';
-import { loginUser, registerUser } from '../services/authService';
+import { loginUser, registerUser } from '../services';
+import { useDarkMode } from '../contexts/DarkModeContext';
 
 interface AuthProps {
   onClose: () => void;
@@ -8,6 +9,7 @@ interface AuthProps {
 }
 
 const Auth: React.FC<AuthProps> = ({ onClose, onLogin }) => {
+  const { isDarkMode } = useDarkMode();
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -55,7 +57,7 @@ const Auth: React.FC<AuthProps> = ({ onClose, onLogin }) => {
         // Handle login
         await loginUser(formData.email, formData.password);
         console.log('Login successful');
-        onLogin?.(false); // Firebase will handle admin check
+        onLogin?.(false); // Supabase will handle admin check
         onClose();
       } else {
         // Handle register
@@ -91,22 +93,20 @@ const Auth: React.FC<AuthProps> = ({ onClose, onLogin }) => {
       }}
     >
       <div 
-        style={{
-          backgroundColor: 'white',
-          borderRadius: '1rem',
-          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-          maxWidth: '28rem',
-          width: '100%',
-          padding: '2rem',
-          position: 'relative'
-        }}
+        className={`rounded-2xl shadow-2xl max-w-md w-full p-8 relative transition-all duration-300 ${
+          isDarkMode 
+            ? 'bg-slate-800 border border-slate-700' 
+            : 'bg-white'
+        }`}
       >
         {/* Header */}
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-serif text-gray-800 mb-2">
+          <h2 className={`text-3xl font-serif mb-2 ${
+            isDarkMode ? 'text-white' : 'text-gray-800'
+          }`}>
             {isLogin ? 'Bine ai revenit!' : 'Creează cont'}
           </h2>
-          <p className="text-gray-600">
+          <p className={isDarkMode ? 'text-slate-300' : 'text-gray-600'}>
             {isLogin 
               ? 'Conectează-te pentru a continua' 
               : 'Înregistrează-te pentru a comanda'

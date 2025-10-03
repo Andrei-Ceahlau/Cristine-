@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Award, Clock, Heart, Users } from 'lucide-react';
+import { useDarkMode } from '../contexts/DarkModeContext';
 
 const About: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+  const { isDarkMode } = useDarkMode();
 
   useEffect(() => {
     const observer = new IntersectionObserver(

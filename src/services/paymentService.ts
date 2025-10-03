@@ -1,7 +1,6 @@
-import { loadStripe, Stripe, StripeElements } from '@stripe/stripe-js';
+import { loadStripe, Stripe } from '@stripe/stripe-js';
 import { 
   createPaymentIntent, 
-  confirmPayment, 
   createCustomer,
   createSetupIntent 
 } from './stripeApi';
@@ -110,7 +109,7 @@ export const confirmPaymentService = async (
 // Funcție pentru a crea un Setup Intent (pentru plăți viitoare)
 export const createSetupIntentService = async (customerId: string): Promise<PaymentResult> => {
   try {
-    const response = await createSetupIntent(customerId);
+    const response = await createSetupIntent({ customerId });
     
     return {
       success: true,
@@ -253,6 +252,10 @@ export const getPaymentModeInfo = (): { mode: string; description: string } => {
     description: 'Plățile sunt în modul live. Se vor procesa plăți reale.'
   };
 };
+
+
+
+
 
 
 
