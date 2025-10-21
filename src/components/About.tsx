@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Award, Clock, Heart, Users } from 'lucide-react';
-import { useDarkMode } from '../contexts/DarkModeContext';
 
 const About: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
-  const { isDarkMode } = useDarkMode();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -51,7 +49,8 @@ const About: React.FC = () => {
     <section ref={sectionRef} id="about" className="py-16 sm:py-20 lg:py-24 bg-white overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-20 items-center">
-          {/* Image side with Enhanced Animation */}
+          
+          {/* Image side */}
           <div className={`relative order-2 lg:order-1 transition-all duration-600 transform ${
             isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
           }`}>
@@ -73,13 +72,12 @@ const About: React.FC = () => {
               </div>
             </div>
             
-            {/* Enhanced Decorative elements */}
+            {/* Decorative elements */}
             <div className="absolute -top-4 -right-4 sm:-top-8 sm:-right-8 w-16 h-16 sm:w-24 sm:h-24 bg-amber-200 rounded-full opacity-20 animate-pulse"></div>
             <div className="absolute -bottom-4 -left-4 sm:-bottom-8 sm:-left-8 w-20 h-20 sm:w-32 sm:h-32 bg-rose-200 rounded-full opacity-20 animate-pulse animation-delay-200"></div>
-            <div className="absolute top-1/2 -right-2 sm:-right-4 w-12 h-12 sm:w-16 sm:h-16 bg-orange-200 rounded-full opacity-15 animate-pulse animation-delay-400"></div>
           </div>
 
-          {/* Content side with Staggered Animation */}
+          {/* Content side */}
           <div className={`space-y-6 sm:space-y-8 order-1 lg:order-2 transition-all duration-600 delay-100 transform ${
             isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
           }`}>
@@ -96,9 +94,9 @@ const About: React.FC = () => {
                 </h2>
               </div>
 
-              {/* Story Content with Better Typography */}
+              {/* Story Content */}
               <div className="space-y-4 sm:space-y-5 text-gray-600 leading-relaxed text-sm sm:text-base">
-                <p className="text-amber-700 font-semibold text-base sm:text-lg">
+                <p className="text-amber-900 font-semibold text-base sm:text-lg">
                   Din „bucătăria dreptății", în laboratorul deserturilor cu suflet.
                 </p>
                 <p>
@@ -128,13 +126,13 @@ const About: React.FC = () => {
                   artizanale, torturi personalizate și candy baruri memorabile, create cu același devotament 
                   cu care am pornit la drum.
                 </p>
-                <p className="font-semibold text-amber-700 text-base sm:text-lg bg-amber-50 p-4 rounded-lg border-l-4 border-amber-400">
+                <p className="font-semibold text-amber-900 text-base sm:text-lg bg-amber-50 p-4 rounded-lg border-l-4 border-amber-400">
                   Bine ați venit în universul nostru dulce. Ne bucurăm că sunteți aici.
                 </p>
               </div>
             </div>
 
-            {/* Enhanced Features grid */}
+            {/* Features grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               {features.map((feature, index) => (
                 <div 
@@ -144,7 +142,7 @@ const About: React.FC = () => {
                   }`}
                   style={{ transitionDelay: `${200 + index * 50}ms` }}
                 >
-                  <div className="flex-shrink-0 p-2 sm:p-3 bg-gradient-to-br from-amber-100 to-orange-100 text-amber-600 rounded-lg shadow-sm">
+                  <div className="flex-shrink-0 p-2 sm:p-3 bg-gradient-to-br from-amber-100 to-orange-100 text-amber-900 rounded-lg shadow-sm">
                     {feature.icon}
                   </div>
                   <div className="min-w-0 flex-1">

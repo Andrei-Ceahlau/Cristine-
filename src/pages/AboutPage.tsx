@@ -122,7 +122,7 @@ const AboutPage: React.FC = () => {
       <div className="pt-24">
         
         {/* Hero Section */}
-        <section className={`py-16 ${
+        <section className={`py-8 md:py-12 ${
           isDarkMode 
             ? 'bg-gradient-to-br from-slate-800 via-slate-700 to-slate-800' 
             : 'bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50'
@@ -131,7 +131,7 @@ const AboutPage: React.FC = () => {
             <div className={`text-center transition-all duration-800 transform ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6 text-gray-800 dark:text-white">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 text-gray-800 dark:text-white">
                 Povestea Cristine de casă
               </h1>
               <p className="text-xl max-w-3xl mx-auto leading-relaxed text-gray-600 dark:text-slate-300">
@@ -142,19 +142,19 @@ const AboutPage: React.FC = () => {
         </section>
 
         {/* Story Section */}
-        <section         className="py-16 bg-white dark:bg-slate-800">
+        <section         className="py-8 md:py-12 bg-white dark:bg-slate-800">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10 items-center">
               
               {/* Text Content */}
-              <div className={`space-y-8 transition-all duration-800 transform ${
+              <div className={`space-y-6 transition-all duration-800 transform ${
                 isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
               }`}>
                 <div>
-                  <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6 text-gray-800 dark:text-white">
+                  <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4 text-gray-800 dark:text-white">
                     Despre noi
                   </h2>
-                  <p className="text-lg text-gray-600 dark:text-slate-300 leading-relaxed mb-6">
+                  <p className="text-lg text-gray-600 dark:text-slate-300 leading-relaxed mb-4">
                     Totul începe ca o joacă în laborator, printre ingrediente naturale și arome care spun povestea deserturilor noastre preferate. Luăm o porție de inspirație, jumătate de kilogram de pasiune, punem multă bucurie în compoziție, după gust și vedem rezultatul… Dulce de tot!
                   </p>
                   <p className="text-lg text-gray-600 dark:text-slate-300 leading-relaxed">

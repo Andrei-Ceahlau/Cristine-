@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ShoppingCart, Heart, Star, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useShop } from '../contexts/ShopContext';
+import { useCart } from '../contexts/CartContext';
 
 interface Product {
   id: number;
@@ -14,9 +15,9 @@ interface Product {
 }
 
 const ShopPage: React.FC = () => {
-  const [cart, setCart] = useState<Product[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const { isShopOpen } = useShop();
+  const { addToCart } = useCart();
 
   const products: Product[] = [
     {
@@ -84,16 +85,15 @@ const ShopPage: React.FC = () => {
     { id: 'candy-bar', name: 'Candy Bar' }
   ];
 
-  const addToCart = (product: Product) => {
-    setCart([...cart, product]);
-  };
-
-  const removeFromCart = (productId: number) => {
-    setCart(cart.filter(item => item.id !== productId));
-  };
-
-  const getCartTotal = () => {
-    return cart.reduce((total, item) => total + item.price, 0);
+  const handleAddToCart = (product: Product) => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      description: product.description,
+      price: product.price,
+      image: product.image,
+      category: product.category
+    });
   };
 
   const filteredProducts = selectedCategory === 'all' 
@@ -219,7 +219,7 @@ const ShopPage: React.FC = () => {
                 <div className="flex items-center justify-between">
                   <span className="text-2xl font-bold text-amber-600">{product.price} RON</span>
                   <button
-                    onClick={() => addToCart(product)}
+                    onClick={() => handleAddToCart(product)}
                     disabled={!product.inStock}
                     className={`px-6 py-2 rounded-full font-medium transition-all duration-200 ${
                       product.inStock
@@ -235,43 +235,13 @@ const ShopPage: React.FC = () => {
           ))}
         </div>
 
-        {/* Shopping Cart */}
-        {cart.length > 0 && (
-          <div className="fixed bottom-6 right-6 bg-white rounded-2xl shadow-2xl p-6 max-w-sm">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-800">Coșul tău</h3>
-              <ShoppingCart className="h-6 w-6 text-amber-600" />
-            </div>
-            
-            <div className="space-y-3 mb-4 max-h-48 overflow-y-auto">
-              {cart.map((item, index) => (
-                <div key={index} className="flex items-center justify-between">
-                  <div className="flex-1">
-                    <p className="font-medium text-gray-800">{item.name}</p>
-                    <p className="text-sm text-gray-600">{item.price} RON</p>
-                  </div>
-                  <button
-                    onClick={() => removeFromCart(item.id)}
-                    className="text-red-500 hover:text-red-700"
-                  >
-                    ×
-                  </button>
-                </div>
-              ))}
-            </div>
-            
-            <div className="border-t pt-4">
-              <div className="flex items-center justify-between mb-4">
-                <span className="font-semibold text-gray-800">Total:</span>
-                <span className="text-xl font-bold text-amber-600">{getCartTotal()} RON</span>
-              </div>
-              
-              <button className="w-full bg-amber-600 text-white py-3 rounded-full font-medium hover:bg-amber-700 transition-colors">
-                Finalizează comanda
-              </button>
-            </div>
-          </div>
-        )}
+        {/* Cart Button */}
+        <Link
+          to="/cart"
+          className="fixed bottom-6 right-6 bg-amber-600 hover:bg-amber-700 text-white p-4 rounded-full shadow-2xl transition-all duration-200 transform hover:scale-110"
+        >
+          <ShoppingCart className="h-6 w-6" />
+        </Link>
       </div>
     </div>
   );
