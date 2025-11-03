@@ -126,7 +126,7 @@ const Contact: React.FC = () => {
             <div className="flex justify-center mb-4 sm:mb-6">
               <div className="relative">
                 <img 
-                  src="/logo/Cristine-Logo.png" 
+                  src="/logo/Cristine-Logo.png?v=2" 
                   alt="Cristine de casă" 
                   className="h-16 w-16 sm:h-20 sm:w-20 lg:h-24 lg:w-24 rounded-full object-cover shadow-2xl border-4 border-amber-400/30 hover:border-amber-400/60 transition-all duration-200"
                 />

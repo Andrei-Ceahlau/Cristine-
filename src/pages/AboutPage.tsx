@@ -35,7 +35,7 @@ const AboutPage: React.FC = () => {
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-4 cursor-pointer group transition-all duration-200 hover:scale-102">
               <img 
-                src="/logo/Cristine-Logo.png" 
+                src="/logo/Cristine-Logo.png?v=2" 
                 alt="Cristine de casă" 
                 className="h-12 w-12 md:h-14 md:w-14 rounded-full object-cover shadow-lg group-hover:shadow-xl transition-shadow duration-200"
               />

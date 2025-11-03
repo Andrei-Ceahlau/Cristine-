@@ -85,7 +85,7 @@ const About: React.FC = () => {
               {/* Header with Logo */}
               <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 mb-6 sm:mb-8">
                 <img 
-                  src="/logo/Cristine-Logo.png" 
+                  src="/logo/Cristine-Logo.png?v=2" 
                   alt="Cristine de casă" 
                   className="h-12 w-12 sm:h-16 sm:w-16 rounded-full object-cover shadow-lg flex-shrink-0"
                 />
