@@ -41,7 +41,7 @@ const Header: React.FC = () => {
             {/* LOGO - STÂNGA */}
             <Link to="/" className="flex items-center space-x-3 group">
               <img 
-                src="/logo/Cristine-Logo (1).jpg" 
+                src="/logo/Cristine-Logo.png" 
                 alt="Cristine de casă" 
                 className="h-14 w-14 rounded-full object-cover shadow-md group-hover:shadow-lg transition-shadow"
               />
