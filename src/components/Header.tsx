@@ -40,7 +40,7 @@ const Header: React.FC = () => {
             
             {/* LOGO - STÂNGA */}
             <Link to="/" className="flex items-center space-x-3 group">
-              <div className="h-14 w-14 rounded-full overflow-hidden bg-white">
+              <div className="h-14 w-14 rounded-full overflow-hidden bg-[#ede2e0]">
                 <img 
                   src="/logo/cristine-logo-new.png" 
                   alt="Cristine de casă" 
