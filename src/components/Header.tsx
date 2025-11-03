@@ -40,11 +40,13 @@ const Header: React.FC = () => {
             
             {/* LOGO - STÂNGA */}
             <Link to="/" className="flex items-center space-x-3 group">
-              <img 
-                src="/logo/cristine-logo-new.png" 
-                alt="Cristine de casă" 
-                className="h-14 w-14 rounded-full object-cover shadow-md group-hover:shadow-lg transition-shadow"
-              />
+              <div className="h-14 w-14 rounded-full overflow-hidden bg-white">
+                <img 
+                  src="/logo/cristine-logo-new.png" 
+                  alt="Cristine de casă" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 group-hover:text-amber-900 transition-colors" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700 }}>
                 Cristine de casă
               </h1>
