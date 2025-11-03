@@ -4,15 +4,16 @@ const Hero: React.FC = () => {
   return (
     <section className="relative">
       {/* FOTOGRAFIE REPREZENTATIVĂ - SUB HEADER - FĂRĂ TEXT */}
-      <div className="relative h-screen">
-        {/* Imagine de fundal */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+      <div className="relative w-full" style={{ height: '600px' }}>
+        {/* Imagine de fundal - optimizată pentru calitate maximă */}
+        <img 
+          src="/imagini-prezentare/hero-main.jpeg"
+          alt="Cristine de casă - Prăjituri artizanale"
+          className="w-full h-full object-cover"
           style={{
-            backgroundImage: `url('/imagini-prezentare/hero-main.jpeg')`
+            imageRendering: '-webkit-optimize-contrast',
           }}
-        >
-        </div>
+        />
       </div>
     </section>
   );
