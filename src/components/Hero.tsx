@@ -4,7 +4,7 @@ const Hero: React.FC = () => {
   return (
     <section className="relative">
       {/* FOTOGRAFIE REPREZENTATIVĂ - SUB HEADER - FĂRĂ TEXT */}
-      <div className="relative w-full" style={{ height: '600px' }}>
+      <div className="relative w-full h-screen">
         {/* Imagine de fundal - optimizată pentru calitate maximă */}
         <img 
           src="/imagini-prezentare/hero-main.jpeg"
