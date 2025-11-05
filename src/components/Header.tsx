@@ -33,14 +33,14 @@ const Header: React.FC = () => {
         </div>
       </div>
 
-      {/* MAIN HEADER - Logo Stânga, Meniu Dreapta */}
+      {/* MAIN HEADER - Logo Centrat, Meniu Dreapta */}
       <div className="bg-[#ede2e0] shadow-sm">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-20">
+          <div className="relative flex items-center justify-center h-24">
             
-            {/* LOGO - STÂNGA */}
+            {/* LOGO - CENTRU */}
             <Link to="/" className="flex items-center group">
-              <div className="h-16 w-16 rounded-full overflow-hidden bg-[#ede2e0] group-hover:opacity-90 transition-opacity">
+              <div className="h-28 w-28 rounded-full overflow-hidden bg-[#ede2e0] group-hover:opacity-90 transition-opacity">
                 <img 
                   src="/logo/cristine-logo-new.png" 
                   alt="Cristine de casă" 
@@ -50,7 +50,7 @@ const Header: React.FC = () => {
             </Link>
 
             {/* MENIU - DREAPTA (Desktop) */}
-            <nav className="hidden md:flex items-center space-x-8">
+            <nav className="hidden md:flex items-center space-x-8 absolute right-0">
               {menuItems.map((item) => {
                 const isActive = location.pathname === item.path;
                 return (
@@ -85,7 +85,7 @@ const Header: React.FC = () => {
 
             {/* Mobile Menu Button */}
             <button
-              className="md:hidden p-2 text-gray-700 hover:text-amber-900 transition-colors"
+              className="md:hidden p-2 text-gray-700 hover:text-amber-900 transition-colors absolute right-0"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
