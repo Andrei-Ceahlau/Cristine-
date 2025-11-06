@@ -36,7 +36,7 @@ const Header: React.FC = () => {
       {/* MAIN HEADER - Logo Centrat, Meniu Dreapta */}
       <div className="bg-[#ede2e0] shadow-sm">
         <div className="container mx-auto px-4">
-          <div className="relative flex items-center justify-center h-24">
+          <div className="relative flex items-center justify-center h-36">
             
             {/* LOGO - CENTRU */}
             <Link to="/" className="flex items-center group">
