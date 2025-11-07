@@ -36,11 +36,11 @@ const Header: React.FC = () => {
       {/* MAIN HEADER - Logo Centrat, Meniu Dreapta */}
       <div className="bg-[#ede2e0] shadow-sm">
         <div className="container mx-auto px-4">
-          <div className="relative flex items-center justify-center h-36">
+          <div className="relative flex items-center justify-center h-32">
             
             {/* LOGO - CENTRU */}
             <Link to="/" className="flex items-center group">
-              <div className="h-28 w-28 rounded-full overflow-hidden bg-[#ede2e0] group-hover:opacity-90 transition-opacity">
+              <div className="h-32 w-32 rounded-full overflow-hidden bg-[#ede2e0] group-hover:opacity-90 transition-opacity">
                 <img 
                   src="/logo/cristine-logo-new.png" 
                   alt="Cristine de casă" 
