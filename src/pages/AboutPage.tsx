@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Phone, Mail } from 'lucide-react';
+import { MapPin, Mail } from 'lucide-react';
 
 const AboutPage: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -10,71 +10,7 @@ const AboutPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="fixed top-0 w-full z-50 transition-all duration-500 backdrop-blur-md shadow-lg bg-white/95">
-        {/* Top info bar */}
-        <div className="py-2 text-sm bg-gradient-to-r from-amber-50 to-orange-50">
-          <div className="container mx-auto px-4 flex justify-center items-center space-x-6 text-amber-700">
-            <div className="flex items-center space-x-2">
-              <Phone className="h-3.5 w-3.5" />
-              <span>0230 123 456</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <MapPin className="h-3.5 w-3.5" />
-              <span>Suceava, Str. Stefan cel Mare nr. 15</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Main navigation */}
-        <nav className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
-            <Link to="/" className="flex items-center space-x-4 cursor-pointer group transition-all duration-200 hover:scale-102">
-              <img 
-                src="/logo/Cristine-Logo.png?v=2" 
-                alt="Cristine de casă" 
-                className="h-12 w-12 md:h-14 md:w-14 rounded-full object-cover shadow-lg group-hover:shadow-xl transition-shadow duration-200"
-              />
-              <h1 className="text-2xl md:text-3xl font-serif font-bold text-amber-800 group-hover:text-amber-900 transition-colors duration-200">
-                Cristine de casă
-              </h1>
-            </Link>
-
-            {/* Desktop Menu */}
-            <div className="hidden md:flex items-center space-x-1">
-              <Link
-                to="/"
-                className="px-4 py-2 rounded-xl text-sm font-medium text-gray-600 hover:text-amber-700 hover:bg-amber-50 transition-all duration-200"
-              >
-                Acasă
-              </Link>
-              <Link
-                to="/about"
-                className="px-4 py-2 rounded-xl text-sm font-medium text-amber-700 bg-amber-100/60 transition-all duration-200"
-              >
-                Despre noi
-              </Link>
-              <Link
-                to="/shop"
-                className="px-4 py-2 rounded-xl text-sm font-medium text-gray-600 hover:text-amber-700 hover:bg-amber-50 transition-all duration-200"
-              >
-                Magazin
-              </Link>
-              <Link
-                to="/contact"
-                className="px-4 py-2 rounded-xl text-sm font-medium text-gray-600 hover:text-amber-700 hover:bg-amber-50 transition-all duration-200"
-              >
-                Contact
-              </Link>
-            </div>
-          </div>
-        </nav>
-      </header>
-
-      {/* Main Content */}
-      <div className="pt-24">
+    <div className="min-h-screen bg-white pt-40">
         
         {/* Hero Section */}
         <section className="py-8 md:py-12 bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50">
@@ -335,7 +271,6 @@ const AboutPage: React.FC = () => {
             </div>
           </div>
         </section>
-      </div>
     </div>
   );
 };

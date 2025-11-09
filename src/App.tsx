@@ -20,11 +20,13 @@ function App() {
       <CartProvider>
         <ShopProvider>
           <Router>
+            {/* HEADER GLOBAL - Apare pe TOATE paginile */}
+            <Header />
+            
             <Routes>
               {/* HOME PAGE */}
               <Route path="/" element={
                 <div className="min-h-screen bg-white">
-                  <Header />
                   <Hero />
                   <WelcomeCards />
                   <ProductCategories />
@@ -48,7 +50,6 @@ function App() {
               {/* CONTACT PAGE */}
               <Route path="/contact" element={
                 <div className="min-h-screen bg-white">
-                  <Header />
                   <Contact />
                   <Footer />
                 </div>
