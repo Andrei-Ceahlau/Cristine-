@@ -33,25 +33,14 @@ const Header: React.FC = () => {
         </div>
       </div>
 
-      {/* MAIN HEADER - Logo Centrat, Meniu Dreapta */}
+      {/* MAIN HEADER - Logo Centrat, Meniu Stânga/Dreapta */}
       <div className="bg-[#ede2e0] shadow-sm">
         <div className="container mx-auto px-4">
-          <div className="relative flex items-center justify-center h-32">
+          <div className="relative flex items-center justify-between h-32">
             
-            {/* LOGO - CENTRU */}
-            <Link to="/" className="flex items-center group">
-              <div className="h-32 w-32 rounded-full overflow-hidden bg-[#ede2e0] group-hover:opacity-90 transition-opacity">
-                <img 
-                  src="/logo/cristine-logo-new.png" 
-                  alt="Cristine de casă" 
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </Link>
-
-            {/* MENIU - DREAPTA (Desktop) */}
-            <nav className="hidden md:flex items-center space-x-8 absolute right-0">
-              {menuItems.map((item) => {
+            {/* MENIU - STÂNGA (Desktop) */}
+            <nav className="hidden md:flex items-center space-x-8">
+              {menuItems.slice(0, 2).map((item) => {
                 const isActive = location.pathname === item.path;
                 return (
                   <Link
@@ -68,28 +57,62 @@ const Header: React.FC = () => {
                   </Link>
                 );
               })}
-              
-              {/* Cart Icon */}
-              <Link 
-                to="/cart" 
-                className="relative p-2 text-gray-700 hover:text-amber-900 transition-colors"
-              >
-                <ShoppingCart className="h-5 w-5" />
-                {getTotalItems() > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-amber-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
-                    {getTotalItems()}
-                  </span>
-                )}
-              </Link>
             </nav>
 
-            {/* Mobile Menu Button */}
-            <button
-              className="md:hidden p-2 text-gray-700 hover:text-amber-900 transition-colors absolute right-0"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
+            {/* LOGO - CENTRU (Absolut) */}
+            <Link to="/" className="absolute left-1/2 transform -translate-x-1/2 flex items-center group">
+              <div className="h-32 w-32 rounded-full overflow-hidden bg-[#ede2e0] group-hover:opacity-90 transition-opacity">
+                <img 
+                  src="/logo/cristine-logo-new.png" 
+                  alt="Cristine de casă" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </Link>
+
+            {/* MENIU - DREAPTA (Desktop) & Mobile Button */}
+            <div className="flex items-center">
+              <nav className="hidden md:flex items-center space-x-8">
+                {menuItems.slice(2, 4).map((item) => {
+                  const isActive = location.pathname === item.path;
+                  return (
+                    <Link
+                      key={item.name}
+                      to={item.path}
+                      className={`text-base font-medium transition-colors ${
+                        isActive
+                          ? 'text-amber-900 font-semibold'
+                          : 'text-gray-700 hover:text-amber-900'
+                      }`}
+                      style={{ fontFamily: 'Inter, sans-serif', fontWeight: isActive ? 600 : 500 }}
+                    >
+                      {item.name}
+                    </Link>
+                  );
+                })}
+                
+                {/* Cart Icon */}
+                <Link 
+                  to="/cart" 
+                  className="relative p-2 text-gray-700 hover:text-amber-900 transition-colors"
+                >
+                  <ShoppingCart className="h-5 w-5" />
+                  {getTotalItems() > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-amber-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
+                      {getTotalItems()}
+                    </span>
+                  )}
+                </Link>
+              </nav>
+
+              {/* Mobile Menu Button */}
+              <button
+                className="md:hidden p-2 text-gray-700 hover:text-amber-900 transition-colors"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              >
+                {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </button>
+            </div>
           </div>
         </div>
       </div>
