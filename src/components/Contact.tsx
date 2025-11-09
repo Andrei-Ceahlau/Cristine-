@@ -123,15 +123,6 @@ const Contact: React.FC = () => {
           <div className={`text-center mb-12 sm:mb-16 transition-all duration-600 transform ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>
-            <div className="flex justify-center mb-4 sm:mb-6">
-              <div className="relative">
-                <img 
-                  src="/logo/Cristine-Logo.png?v=2" 
-                  alt="Cristine de casă" 
-                  className="h-16 w-16 sm:h-20 sm:w-20 lg:h-24 lg:w-24 rounded-full object-cover shadow-2xl border-4 border-amber-400/30 hover:border-amber-400/60 transition-all duration-200"
-                />
-              </div>
-            </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 sm:mb-6 text-white" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700 }}>
               Vă Așteptăm
             </h2>
