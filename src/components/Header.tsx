@@ -48,7 +48,7 @@ const Header: React.FC = () => {
                     to={item.path}
                     className={`text-xl font-semibold px-8 py-3 rounded-lg transition-all ${
                       isActive
-                        ? 'text-amber-900 bg-amber-50'
+                        ? 'text-white bg-[#c4a57b]'
                         : 'text-gray-700 hover:text-amber-900 hover:bg-amber-50/50'
                     }`}
                     style={{ fontFamily: 'Inter, sans-serif', fontWeight: isActive ? 700 : 600 }}
@@ -81,7 +81,7 @@ const Header: React.FC = () => {
                       to={item.path}
                       className={`text-xl font-semibold px-8 py-3 rounded-lg transition-all ${
                         isActive
-                          ? 'text-amber-900 bg-amber-50'
+                          ? 'text-white bg-[#c4a57b]'
                           : 'text-gray-700 hover:text-amber-900 hover:bg-amber-50/50'
                       }`}
                       style={{ fontFamily: 'Inter, sans-serif', fontWeight: isActive ? 700 : 600 }}
