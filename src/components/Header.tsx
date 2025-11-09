@@ -39,17 +39,17 @@ const Header: React.FC = () => {
           <div className="relative flex items-center justify-between h-32">
             
             {/* MENIU - STÂNGA (Desktop) */}
-            <nav className="hidden md:flex items-center space-x-8">
+            <nav className="hidden md:flex items-center space-x-6">
               {menuItems.slice(0, 2).map((item) => {
                 const isActive = location.pathname === item.path;
                 return (
                   <Link
                     key={item.name}
                     to={item.path}
-                    className={`text-base font-medium transition-colors ${
+                    className={`text-lg font-medium px-5 py-2 rounded-lg transition-all ${
                       isActive
-                        ? 'text-amber-900 font-semibold'
-                        : 'text-gray-700 hover:text-amber-900'
+                        ? 'text-amber-900 font-semibold bg-amber-50'
+                        : 'text-gray-700 hover:text-amber-900 hover:bg-amber-50/50'
                     }`}
                     style={{ fontFamily: 'Inter, sans-serif', fontWeight: isActive ? 600 : 500 }}
                   >
@@ -72,17 +72,17 @@ const Header: React.FC = () => {
 
             {/* MENIU - DREAPTA (Desktop) & Mobile Button */}
             <div className="flex items-center">
-              <nav className="hidden md:flex items-center space-x-8">
+              <nav className="hidden md:flex items-center space-x-6">
                 {menuItems.slice(2, 4).map((item) => {
                   const isActive = location.pathname === item.path;
                   return (
                     <Link
                       key={item.name}
                       to={item.path}
-                      className={`text-base font-medium transition-colors ${
+                      className={`text-lg font-medium px-5 py-2 rounded-lg transition-all ${
                         isActive
-                          ? 'text-amber-900 font-semibold'
-                          : 'text-gray-700 hover:text-amber-900'
+                          ? 'text-amber-900 font-semibold bg-amber-50'
+                          : 'text-gray-700 hover:text-amber-900 hover:bg-amber-50/50'
                       }`}
                       style={{ fontFamily: 'Inter, sans-serif', fontWeight: isActive ? 600 : 500 }}
                     >
@@ -94,9 +94,9 @@ const Header: React.FC = () => {
                 {/* Cart Icon */}
                 <Link 
                   to="/cart" 
-                  className="relative p-2 text-gray-700 hover:text-amber-900 transition-colors"
+                  className="relative p-3 text-gray-700 hover:text-amber-900 hover:bg-amber-50/50 rounded-lg transition-all"
                 >
-                  <ShoppingCart className="h-5 w-5" />
+                  <ShoppingCart className="h-6 w-6" />
                   {getTotalItems() > 0 && (
                     <span className="absolute -top-1 -right-1 bg-amber-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
                       {getTotalItems()}
