@@ -10,7 +10,7 @@ const AboutPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white pt-40">
+    <div className="min-h-screen bg-white">
         
         {/* Hero Section */}
         <section className="py-8 md:py-12 bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50">

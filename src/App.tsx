@@ -23,38 +23,41 @@ function App() {
             {/* HEADER GLOBAL - Apare pe TOATE paginile */}
             <Header />
             
-            <Routes>
-              {/* HOME PAGE */}
-              <Route path="/" element={
-                <div className="min-h-screen bg-white">
-                  <Hero />
-                  <WelcomeCards />
-                  <ProductCategories />
-                  <Testimonials />
-                  <Footer />
-                </div>
-              } />
-              
-              {/* SHOP PAGE */}
-              <Route path="/shop" element={<ShopPage />} />
-              
-              {/* ABOUT PAGE - Pagină distinctă */}
-              <Route path="/about" element={<AboutPage />} />
-              
-              {/* CART PAGE */}
-              <Route path="/cart" element={<CartPage />} />
-              
-              {/* PROFILE PAGE */}
-              <Route path="/profile" element={<ProfilePage />} />
-              
-              {/* CONTACT PAGE */}
-              <Route path="/contact" element={
-                <div className="min-h-screen bg-white">
-                  <Contact />
-                  <Footer />
-                </div>
-              } />
-            </Routes>
+            {/* MAIN CONTENT - Padding pentru header fixed */}
+            <main className="pt-[168px] md:pt-[180px]">
+              <Routes>
+                {/* HOME PAGE */}
+                <Route path="/" element={
+                  <div className="min-h-screen bg-white">
+                    <Hero />
+                    <WelcomeCards />
+                    <ProductCategories />
+                    <Testimonials />
+                    <Footer />
+                  </div>
+                } />
+                
+                {/* SHOP PAGE */}
+                <Route path="/shop" element={<ShopPage />} />
+                
+                {/* ABOUT PAGE - Pagină distinctă */}
+                <Route path="/about" element={<AboutPage />} />
+                
+                {/* CART PAGE */}
+                <Route path="/cart" element={<CartPage />} />
+                
+                {/* PROFILE PAGE */}
+                <Route path="/profile" element={<ProfilePage />} />
+                
+                {/* CONTACT PAGE */}
+                <Route path="/contact" element={
+                  <div className="min-h-screen bg-white">
+                    <Contact />
+                    <Footer />
+                  </div>
+                } />
+              </Routes>
+            </main>
           </Router>
         </ShopProvider>
       </CartProvider>
