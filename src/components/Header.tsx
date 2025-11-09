@@ -39,19 +39,19 @@ const Header: React.FC = () => {
           <div className="relative flex items-center justify-between h-32">
             
             {/* MENIU - STÂNGA (Desktop) */}
-            <nav className="hidden md:flex items-center space-x-6">
+            <nav className="hidden md:flex items-center space-x-4">
               {menuItems.slice(0, 2).map((item) => {
                 const isActive = location.pathname === item.path;
                 return (
                   <Link
                     key={item.name}
                     to={item.path}
-                    className={`text-lg font-medium px-5 py-2 rounded-lg transition-all ${
+                    className={`text-xl font-semibold px-8 py-3 rounded-lg transition-all ${
                       isActive
-                        ? 'text-amber-900 font-semibold bg-amber-50'
+                        ? 'text-amber-900 bg-amber-50'
                         : 'text-gray-700 hover:text-amber-900 hover:bg-amber-50/50'
                     }`}
-                    style={{ fontFamily: 'Inter, sans-serif', fontWeight: isActive ? 600 : 500 }}
+                    style={{ fontFamily: 'Inter, sans-serif', fontWeight: isActive ? 700 : 600 }}
                   >
                     {item.name}
                   </Link>
@@ -72,19 +72,19 @@ const Header: React.FC = () => {
 
             {/* MENIU - DREAPTA (Desktop) & Mobile Button */}
             <div className="flex items-center">
-              <nav className="hidden md:flex items-center space-x-6">
+              <nav className="hidden md:flex items-center space-x-4">
                 {menuItems.slice(2, 4).map((item) => {
                   const isActive = location.pathname === item.path;
                   return (
                     <Link
                       key={item.name}
                       to={item.path}
-                      className={`text-lg font-medium px-5 py-2 rounded-lg transition-all ${
+                      className={`text-xl font-semibold px-8 py-3 rounded-lg transition-all ${
                         isActive
-                          ? 'text-amber-900 font-semibold bg-amber-50'
+                          ? 'text-amber-900 bg-amber-50'
                           : 'text-gray-700 hover:text-amber-900 hover:bg-amber-50/50'
                       }`}
-                      style={{ fontFamily: 'Inter, sans-serif', fontWeight: isActive ? 600 : 500 }}
+                      style={{ fontFamily: 'Inter, sans-serif', fontWeight: isActive ? 700 : 600 }}
                     >
                       {item.name}
                     </Link>
@@ -94,9 +94,9 @@ const Header: React.FC = () => {
                 {/* Cart Icon */}
                 <Link 
                   to="/cart" 
-                  className="relative p-3 text-gray-700 hover:text-amber-900 hover:bg-amber-50/50 rounded-lg transition-all"
+                  className="relative px-4 py-3 text-gray-700 hover:text-amber-900 hover:bg-amber-50/50 rounded-lg transition-all"
                 >
-                  <ShoppingCart className="h-6 w-6" />
+                  <ShoppingCart className="h-7 w-7" />
                   {getTotalItems() > 0 && (
                     <span className="absolute -top-1 -right-1 bg-amber-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
                       {getTotalItems()}
