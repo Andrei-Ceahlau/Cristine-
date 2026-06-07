@@ -11,26 +11,26 @@ const Footer: React.FC = () => {
           
           {/* LINKURI UTILE */}
           <div>
-            <h3 className="text-lg font-bold mb-4 text-amber-300" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700 }}>
+            <h3 className="text-lg font-bold mb-4 text-white" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700 }}>
               Linkuri Utile
             </h3>
             <div className="space-y-3 text-sm">
-              <a href="#" className="block hover:text-amber-300 transition-colors duration-200">
+              <a href="#" className="block text-white hover:text-amber-200 transition-colors duration-200">
                 Politica de protecție a datelor cu caracter personal
               </a>
-              <a href="#" className="block hover:text-amber-300 transition-colors duration-200">
+              <a href="#" className="block text-white hover:text-amber-200 transition-colors duration-200">
                 Termeni și condiții
               </a>
-              <a href="#" className="block hover:text-amber-300 transition-colors duration-200">
+              <a href="#" className="block text-white hover:text-amber-200 transition-colors duration-200">
                 Accesibilitate
               </a>
-              <a href="#" className="block hover:text-amber-300 transition-colors duration-200">
+              <a href="#" className="block text-white hover:text-amber-200 transition-colors duration-200">
                 Autoritatea pentru protecția consumatorului
               </a>
-              <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener noreferrer" className="block hover:text-amber-300 transition-colors duration-200">
+              <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener noreferrer" className="block text-white hover:text-amber-200 transition-colors duration-200">
                 Soluționarea online a litigiilor
               </a>
-              <a href="#" className="block hover:text-amber-300 transition-colors duration-200">
+              <a href="#" className="block text-white hover:text-amber-200 transition-colors duration-200">
                 Informații nutriționale
               </a>
             </div>
@@ -38,7 +38,7 @@ const Footer: React.FC = () => {
 
           {/* SOLUȚIONAREA ONLINE A LITIGIILOR */}
           <div>
-            <h3 className="text-lg font-bold mb-4 text-amber-300" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700 }}>
+            <h3 className="text-lg font-bold mb-4 text-white" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700 }}>
               Soluționarea Online a Litigiilor
             </h3>
             <p className="text-sm leading-relaxed text-gray-300 mb-3">
@@ -48,7 +48,7 @@ const Footer: React.FC = () => {
               href="https://ec.europa.eu/consumers/odr" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-amber-300 hover:text-amber-200 underline text-sm"
+              className="text-white hover:text-amber-200 underline text-sm"
             >
               ec.europa.eu/consumers/odr
             </a>
@@ -56,7 +56,7 @@ const Footer: React.FC = () => {
 
           {/* ANPC */}
           <div>
-            <h3 className="text-lg font-bold mb-4 text-amber-300" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700 }}>
+            <h3 className="text-lg font-bold mb-4 text-white" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700 }}>
               ANPC
             </h3>
             <p className="text-sm leading-relaxed text-gray-300 mb-3">
@@ -66,7 +66,7 @@ const Footer: React.FC = () => {
               href="https://anpc.ro" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-amber-300 hover:text-amber-200 underline text-sm"
+              className="text-white hover:text-amber-200 underline text-sm"
             >
               anpc.ro
             </a>
@@ -79,10 +79,10 @@ const Footer: React.FC = () => {
             
             {/* Social Icons */}
             <div className="flex items-center space-x-6">
-              <a href="#" className="hover:text-amber-300 transition-colors duration-200" aria-label="Facebook">
+              <a href="#" className="text-white hover:text-amber-200 transition-colors duration-200" aria-label="Facebook">
                 <Facebook className="h-6 w-6" />
               </a>
-              <a href="#" className="hover:text-amber-300 transition-colors duration-200" aria-label="Instagram">
+              <a href="#" className="text-white hover:text-amber-200 transition-colors duration-200" aria-label="Instagram">
                 <Instagram className="h-6 w-6" />
               </a>
             </div>

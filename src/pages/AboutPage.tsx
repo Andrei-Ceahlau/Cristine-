@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { MapPin, Mail } from 'lucide-react';
 
 const AboutPage: React.FC = () => {
@@ -15,16 +14,6 @@ const AboutPage: React.FC = () => {
         {/* Hero Section */}
         <section className="py-8 md:py-12 bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className={`text-center transition-all duration-800 transform ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 text-gray-800">
-                Povestea Cristine de casă
-              </h1>
-              <p className="text-xl max-w-3xl mx-auto leading-relaxed text-gray-600">
-                Totul începe ca o joacă în laborator, printre ingrediente naturale și arome care spun povestea deserturilor noastre preferate.
-              </p>
-            </div>
           </div>
         </section>
 
@@ -38,24 +27,9 @@ const AboutPage: React.FC = () => {
                 isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
               }`}>
                 <div>
-                  <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4 text-gray-800">
+                  <h2 className="text-3xl md:text-4xl font-serif font-bold text-gray-800">
                     Despre noi
                   </h2>
-                  <p className="text-lg text-gray-600 leading-relaxed mb-4">
-                    Totul începe ca o joacă în laborator, printre ingrediente naturale și arome care spun povestea deserturilor noastre preferate. Luăm o porție de inspirație, jumătate de kilogram de pasiune, punem multă bucurie în compoziție, după gust și vedem rezultatul… Dulce de tot!
-                  </p>
-                  <p className="text-lg text-gray-600 leading-relaxed">
-                    Torturile ne ies cel mai bine. Sau poate tartele? Pavlova este preferata noastră, dar nici la choux nu putem renunța și de aici ne pierdem cu pofta, pentru că opțiuni avem pentru toate gusturile.
-                  </p>
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Link 
-                    to="/shop"
-                    className="inline-flex items-center justify-center bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 text-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg"
-                  >
-                    Descoperă bunătățile Cristine
-                  </Link>
                 </div>
               </div>
 
@@ -131,14 +105,12 @@ const AboutPage: React.FC = () => {
           </div>
         </section>
 
-        {/* Founder Section */}
+        {/* Founder Image Section */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              
-              {/* Image */}
+            <div className="max-w-2xl mx-auto">
               <div className={`relative transition-all duration-800 transform ${
-                isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}>
                 <div className="relative overflow-hidden rounded-2xl shadow-2xl bg-gradient-to-br from-amber-100 to-orange-100">
                   <img
@@ -147,33 +119,6 @@ const AboutPage: React.FC = () => {
                     className="w-full h-96 lg:h-[700px] object-contain"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className={`space-y-8 transition-all duration-800 delay-200 transform ${
-                isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
-              }`}>
-                <div>
-                  <h2 className="text-4xl md:text-5xl font-serif font-bold text-gray-800 mb-6">
-                    Fondatoarea Cristine
-                  </h2>
-                  <p className="text-xl text-gray-600 leading-relaxed mb-6">
-                    În spatele fiecărui desert perfect se află o poveste de pasiune și dedicare. Cristine, fondatoarea și sufletul "Cristine de casă", a transformat o iubire pentru deserturi într-o artă.
-                  </p>
-                  <p className="text-lg text-gray-600 leading-relaxed mb-6">
-                    Cu o experiență bogată în cofetărie și o viziune clară asupra calității, Cristine a creat un spațiu unde fiecare prăjitură spune o poveste. De la primele rețete experimentale până la creațiile rafinate de astăzi, fiecare desert reflectă atenția la detalii și dragostea pentru ingrediente naturale.
-                  </p>
-                  <p className="text-lg text-gray-600 leading-relaxed">
-                    "Fiecare desert este o bucată din sufletul meu" - aceasta este filosofia care ghidează tot ce face Cristine. Cu răbdare, migală și multă pasiune, ea continuă să inspire și să încântă cu creațiile sale unice.
-                  </p>
-                </div>
-
-                <div className="rounded-2xl p-6 border-l-4 border-amber-400 bg-gradient-to-r from-amber-50 to-orange-50">
-                  <blockquote className="text-lg text-gray-700 italic">
-                    "În fiecare desert pui o parte din tine. Și când îl vezi cum îl savurează cineva, știi că ai reușit să-i aduci bucurie."
-                  </blockquote>
-                  <cite className="font-semibold mt-2 block text-amber-700">- Cristine, Fondatoarea</cite>
                 </div>
               </div>
             </div>
@@ -189,9 +134,6 @@ const AboutPage: React.FC = () => {
               <h2 className="text-4xl md:text-5xl font-serif font-bold text-gray-800 mb-6">
                 Unde ne întâlnim
               </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Cristine de casă este acolo unde ești și tu: fie că ai nevoie de un loc liniștit în care să savurezi prăjitura preferată la o cafea aromată, fie că ai nevoie de un boost de bun și energie.
-              </p>
             </div>
 
             {/* Single Location - Centered */}
@@ -200,10 +142,6 @@ const AboutPage: React.FC = () => {
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}>
                 <div className="text-center">
-                  <h3 className="text-3xl md:text-4xl font-serif font-bold text-gray-800 mb-8">
-                    Cristine de casă Suceava
-                  </h3>
-                  
                   <div className="relative overflow-hidden rounded-2xl shadow-2xl mb-8">
                     <img
                       src="/imagini-prezentare/gradina.jpeg"
@@ -218,14 +156,14 @@ const AboutPage: React.FC = () => {
                       href="https://maps.google.com/?q=47.648092,26.254195"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center bg-amber-600 hover:bg-amber-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105"
+                      className="inline-flex items-center justify-center bg-[#8b4513] hover:bg-[#70340f] text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105"
                     >
                       <MapPin className="h-5 w-5 mr-2" />
                       Google Maps
                     </a>
                     <a
                       href="mailto:comenzi@cofetariacristine.ro"
-                      className="inline-flex items-center justify-center bg-amber-600 hover:bg-amber-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105"
+                      className="inline-flex items-center justify-center bg-[#8b4513] hover:bg-[#70340f] text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105"
                     >
                       <Mail className="h-5 w-5 mr-2" />
                       Contactează-ne
@@ -242,35 +180,6 @@ const AboutPage: React.FC = () => {
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="py-16 bg-white">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div className={`transition-all duration-800 transform ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}>
-              <h2 className="text-4xl md:text-5xl font-serif font-bold text-gray-800 mb-6">
-                Intră în lumea magică a Cristinei
-              </h2>
-              <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-                Descoperă bunătățile noastre și lasă-te sedus de aromele autentice ale Sucevei.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link 
-                  to="/shop"
-                  className="inline-flex items-center justify-center bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 text-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg"
-                >
-                  Descoperă bunătățile Cristine
-                </Link>
-                <Link 
-                  to="/contact"
-                  className="inline-flex items-center justify-center border-2 border-amber-600 text-amber-600 hover:bg-amber-600 hover:text-white px-8 py-4 text-lg font-semibold transition-all duration-200 transform hover:scale-105"
-                >
-                  Contactează-ne
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
     </div>
   );
 };

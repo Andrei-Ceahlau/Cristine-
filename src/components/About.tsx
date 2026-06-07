@@ -126,9 +126,6 @@ const About: React.FC = () => {
                   artizanale, torturi personalizate și candy baruri memorabile, create cu același devotament 
                   cu care am pornit la drum.
                 </p>
-                <p className="font-semibold text-amber-900 text-base sm:text-lg bg-amber-50 p-4 rounded-lg border-l-4 border-amber-400">
-                  Bine ați venit în universul nostru dulce. Ne bucurăm că sunteți aici.
-                </p>
               </div>
             </div>
 

@@ -13,6 +13,8 @@ import ShopPage from './pages/ShopPage';
 import AboutPage from './pages/AboutPage';
 import CartPage from './pages/CartPage';
 import ProfilePage from './pages/ProfilePage';
+import GalleryPage from './pages/GalleryPage';
+import ProductDetailPage from './pages/ProductDetailPage';
 
 function App() {
   return (
@@ -24,11 +26,11 @@ function App() {
             <Header />
             
             {/* MAIN CONTENT - Padding pentru header fixed */}
-            <main className="pt-[168px] md:pt-[180px]">
+            <main className="pt-[108px] sm:pt-[116px]">
               <Routes>
                 {/* HOME PAGE */}
                 <Route path="/" element={
-                  <div className="min-h-screen bg-white">
+                  <div className="min-h-screen bg-[#fdfbf8]">
                     <Hero />
                     <WelcomeCards />
                     <ProductCategories />
@@ -39,6 +41,10 @@ function App() {
                 
                 {/* SHOP PAGE */}
                 <Route path="/shop" element={<ShopPage />} />
+                
+                {/* GALLERY PAGES - Galerie de prezentare */}
+                <Route path="/gallery/:category" element={<GalleryPage />} />
+                <Route path="/gallery/:category/product/:productId" element={<ProductDetailPage />} />
                 
                 {/* ABOUT PAGE - Pagină distinctă */}
                 <Route path="/about" element={<AboutPage />} />
@@ -51,7 +57,7 @@ function App() {
                 
                 {/* CONTACT PAGE */}
                 <Route path="/contact" element={
-                  <div className="min-h-screen bg-white">
+                  <div className="min-h-screen bg-[#fdfbf8]">
                     <Contact />
                     <Footer />
                   </div>

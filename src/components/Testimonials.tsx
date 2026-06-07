@@ -70,16 +70,16 @@ const Testimonials: React.FC = () => {
               </div>
               
               {/* Testimonial Text - ITALIC */}
-              <p className="text-gray-700 italic mb-4 leading-relaxed" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>
+              <p className="text-[#5c4033] italic mb-4 leading-relaxed" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 400, fontSize: '1.1rem' }}>
                 "{testimonial.text}"
               </p>
               
               {/* Name - NORMAL (not italic) */}
               <div className="border-t border-gray-200 pt-3">
-                <p className="font-semibold text-gray-800" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}>
+                <p className="font-semibold text-[#5c4033]" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600 }}>
                   {testimonial.name}
                 </p>
-                <p className="text-sm text-gray-500" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>
+                <p className="text-sm text-[#5c4033]" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 400 }}>
                   {testimonial.date}
                 </p>
               </div>
@@ -93,8 +93,8 @@ const Testimonials: React.FC = () => {
             href="https://www.google.com/maps/place/Cristine+de+cas%C4%83/@47.6480988,26.2516202,17z/data=!4m8!3m7!1s0x4734fd86b7b36edt:0xd266af7514616974!8m2!3d47.64809441!4d26.254195!9m1!1b1!16s%2Fg%2F1tra_plbh5?entry=ttu&g_ep=EgoyMD1!MTAwQC4wLKXMD5oASAFQAw%3D%3D"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg"
-            style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}
+            className="inline-flex items-center justify-center bg-[#5c4033] hover:bg-[#8b6f47] text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg"
+            style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600 }}
           >
             <MapPin className="h-5 w-5 mr-2" />
             Vezi toate recenziile pe Google Maps

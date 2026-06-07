@@ -8,12 +8,20 @@ export interface Product {
   price: number;
   image: string;
   imageUrl?: string;
+  images?: string[]; // Imagini multiple pentru galerie
   category: string;
   inStock: boolean;
   stock: number;
   isPopular?: boolean;
   rating?: number;
   createdAt?: Date;
+  // Câmpuri noi pentru galerie de prezentare
+  weight?: string; // ex: "1,4 kg +/- 100 gr"
+  ingredients?: string; // Lista de ingrediente
+  allergens?: string; // Lista de alergeni (ex: "lapte, ou, unt, smantana pentru frisca")
+  nutritionalInfo?: string; // Informații nutriționale
+  personalizationText?: string; // Text pentru personalizare
+  personalizationPrice?: number; // Preț pentru personalizare
 }
 
 // Funcție pentru a obține toate produsele
@@ -33,12 +41,19 @@ export const getProducts = async (): Promise<Product[]> => {
       price: product.price,
       image: product.image_url || '',
       imageUrl: product.image_url || '',
+      images: product.images ? (Array.isArray(product.images) ? product.images : JSON.parse(product.images)) : undefined,
       category: product.category,
       inStock: product.in_stock,
       stock: product.in_stock ? 100 : 0, // Default stock pentru Supabase
       isPopular: false,
       rating: 5,
-      createdAt: new Date(product.created_at)
+      createdAt: new Date(product.created_at),
+      weight: product.weight || undefined,
+      ingredients: product.ingredients || undefined,
+      allergens: product.allergens || undefined,
+      nutritionalInfo: product.nutritional_info || undefined,
+      personalizationText: product.personalization_text || undefined,
+      personalizationPrice: product.personalization_price || undefined
     }));
   } catch (error) {
     console.error('Error getting products:', error);
@@ -49,10 +64,25 @@ export const getProducts = async (): Promise<Product[]> => {
 // Funcție pentru a obține produsele după categorie
 export const getProductsByCategory = async (category: string): Promise<Product[]> => {
   try {
+    // Mapare slug-uri la nume categorii
+    const categoryMap: { [key: string]: string } = {
+      'torturi': 'torturi',
+      'prajituri-de-casa': 'prajituri-de-casa',
+      'tarte': 'tarte',
+      'biscuiti': 'biscuiti',
+      'patiserie': 'patiserie',
+      'specialitati': 'specialitati',
+      'de-sarbatoare': 'de-sarbatoare',
+      'candybar': 'candybar',
+      'torturi-personalizate': 'torturi-personalizate'
+    };
+    
+    const categoryName = categoryMap[category] || category;
+    
     const { data, error } = await supabase
       .from('products')
       .select('*')
-      .eq('category', category)
+      .eq('category', categoryName)
       .order('created_at', { ascending: false });
 
     if (error) throw error;
@@ -98,12 +128,19 @@ export const getProductById = async (id: number): Promise<Product | null> => {
       price: data.price,
       image: data.image_url || '',
       imageUrl: data.image_url || '',
+      images: data.images ? (Array.isArray(data.images) ? data.images : JSON.parse(data.images)) : undefined,
       category: data.category,
       inStock: data.in_stock,
       stock: data.in_stock ? 100 : 0,
       isPopular: false,
       rating: 5,
-      createdAt: new Date(data.created_at)
+      createdAt: new Date(data.created_at),
+      weight: data.weight || undefined,
+      ingredients: data.ingredients || undefined,
+      allergens: data.allergens || undefined,
+      nutritionalInfo: data.nutritional_info || undefined,
+      personalizationText: data.personalization_text || undefined,
+      personalizationPrice: data.personalization_price || undefined
     };
   } catch (error) {
     console.error('Error getting product:', error);
@@ -114,7 +151,7 @@ export const getProductById = async (id: number): Promise<Product | null> => {
 // Funcție pentru a crea un produs nou (doar pentru admin)
 export const createProduct = async (product: Omit<Product, 'id' | 'createdAt'>): Promise<number> => {
   try {
-    const productData = {
+    const productData: any = {
       name: product.name,
       description: product.description,
       price: product.price,
@@ -123,6 +160,17 @@ export const createProduct = async (product: Omit<Product, 'id' | 'createdAt'>):
       in_stock: product.inStock,
       created_at: new Date().toISOString()
     };
+
+    // Adaugă câmpurile noi dacă există
+    if (product.images) {
+      productData.images = Array.isArray(product.images) ? JSON.stringify(product.images) : product.images;
+    }
+    if (product.weight) productData.weight = product.weight;
+    if (product.ingredients) productData.ingredients = product.ingredients;
+    if (product.allergens) productData.allergens = product.allergens;
+    if (product.nutritionalInfo) productData.nutritional_info = product.nutritionalInfo;
+    if (product.personalizationText) productData.personalization_text = product.personalizationText;
+    if (product.personalizationPrice) productData.personalization_price = product.personalizationPrice;
 
     const { data, error } = await supabase
       .from('products')
@@ -150,6 +198,15 @@ export const updateProduct = async (id: number, product: Partial<Product>): Prom
     if (product.image !== undefined) updateData.image_url = product.image;
     if (product.imageUrl !== undefined) updateData.image_url = product.imageUrl;
     if (product.inStock !== undefined) updateData.in_stock = product.inStock;
+    if (product.images !== undefined) {
+      updateData.images = Array.isArray(product.images) ? JSON.stringify(product.images) : product.images;
+    }
+    if (product.weight !== undefined) updateData.weight = product.weight;
+    if (product.ingredients !== undefined) updateData.ingredients = product.ingredients;
+    if (product.allergens !== undefined) updateData.allergens = product.allergens;
+    if (product.nutritionalInfo !== undefined) updateData.nutritional_info = product.nutritionalInfo;
+    if (product.personalizationText !== undefined) updateData.personalization_text = product.personalizationText;
+    if (product.personalizationPrice !== undefined) updateData.personalization_price = product.personalizationPrice;
 
     const { error } = await supabase
       .from('products')

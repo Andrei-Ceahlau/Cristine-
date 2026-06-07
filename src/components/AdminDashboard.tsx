@@ -9,9 +9,16 @@ interface Product {
   description: string;
   price: number;
   image: string;
+  images?: string[];
   category: string;
   inStock: boolean;
   stock: number;
+  weight?: string;
+  ingredients?: string;
+  allergens?: string;
+  nutritionalInfo?: string;
+  personalizationText?: string;
+  personalizationPrice?: number;
 }
 
 interface Order {
@@ -126,14 +133,24 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
   const handleAddProduct = (e: React.FormEvent) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
+    const imagesStr = formData.get('images') as string;
+    const images = imagesStr ? imagesStr.split(',').map(img => img.trim()).filter(img => img) : undefined;
+    
     const newProduct: Omit<Product, 'id'> = {
       name: formData.get('name') as string,
       description: formData.get('description') as string,
       price: Number(formData.get('price')),
       image: formData.get('image') as string,
+      images: images,
       category: formData.get('category') as string,
       inStock: formData.get('inStock') === 'on',
-      stock: Number(formData.get('stock'))
+      stock: Number(formData.get('stock')),
+      weight: formData.get('weight') as string || undefined,
+      ingredients: formData.get('ingredients') as string || undefined,
+      allergens: formData.get('allergens') as string || undefined,
+      nutritionalInfo: formData.get('nutritionalInfo') as string || undefined,
+      personalizationText: formData.get('personalizationText') as string || undefined,
+      personalizationPrice: formData.get('personalizationPrice') ? Number(formData.get('personalizationPrice')) : undefined
     };
     
     const productWithId = { ...newProduct, id: Date.now() };
@@ -146,15 +163,25 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
     if (!editingProduct) return;
     
     const formData = new FormData(e.target as HTMLFormElement);
+    const imagesStr = formData.get('images') as string;
+    const images = imagesStr ? imagesStr.split(',').map(img => img.trim()).filter(img => img) : undefined;
+    
     const updatedProduct: Product = {
       ...editingProduct,
       name: formData.get('name') as string,
       description: formData.get('description') as string,
       price: Number(formData.get('price')),
       image: formData.get('image') as string,
+      images: images,
       category: formData.get('category') as string,
       inStock: formData.get('inStock') === 'on',
-      stock: Number(formData.get('stock'))
+      stock: Number(formData.get('stock')),
+      weight: formData.get('weight') as string || undefined,
+      ingredients: formData.get('ingredients') as string || undefined,
+      allergens: formData.get('allergens') as string || undefined,
+      nutritionalInfo: formData.get('nutritionalInfo') as string || undefined,
+      personalizationText: formData.get('personalizationText') as string || undefined,
+      personalizationPrice: formData.get('personalizationPrice') ? Number(formData.get('personalizationPrice')) : undefined
     };
     
     setProducts(products.map(p => p.id === editingProduct.id ? updatedProduct : p));
@@ -688,15 +715,19 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                 >
                   <option value="torturi">Torturi</option>
-                  <option value="macarons">Macarons</option>
-                  <option value="cupcakes">Cupcakes</option>
-                  <option value="eclere">Eclere</option>
-                  <option value="candy-bar">Candy Bar</option>
+                  <option value="prajituri-de-casa">Prăjituri de casă</option>
+                  <option value="tarte">Tarte</option>
+                  <option value="biscuiti">Biscuiți</option>
+                  <option value="patiserie">Patiserie</option>
+                  <option value="specialitati">Specialități</option>
+                  <option value="de-sarbatoare">De sărbătoare</option>
+                  <option value="candybar">Candybar</option>
+                  <option value="torturi-personalizate">Torturi personalizate</option>
                 </select>
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">URL Imagine</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">URL Imagine Principală</label>
                 <input
                   type="url"
                   name="image"
@@ -704,6 +735,87 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                   required
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                 />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">URL-uri Imagini Adiționale (separate prin virgulă)</label>
+                <input
+                  type="text"
+                  name="images"
+                  defaultValue={editingProduct?.images?.join(', ') || ''}
+                  placeholder="https://example.com/img1.jpg, https://example.com/img2.jpg"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                />
+                <p className="text-xs text-gray-500 mt-1">Separă multiplele URL-uri cu virgulă</p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Greutate (ex: "1,4 kg +/- 100 gr")</label>
+                <input
+                  type="text"
+                  name="weight"
+                  defaultValue={editingProduct?.weight || ''}
+                  placeholder="1,4 kg +/- 100 gr"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Ingrediente</label>
+                <textarea
+                  name="ingredients"
+                  defaultValue={editingProduct?.ingredients || ''}
+                  rows={4}
+                  placeholder="Lista de ingrediente..."
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Alergeni</label>
+                <input
+                  type="text"
+                  name="allergens"
+                  defaultValue={editingProduct?.allergens || ''}
+                  placeholder="lapte, ou, unt, smantana pentru frisca"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Informații Nutriționale</label>
+                <textarea
+                  name="nutritionalInfo"
+                  defaultValue={editingProduct?.nutritionalInfo || ''}
+                  rows={4}
+                  placeholder="Valori nutriționale per 100g..."
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Preț Personalizare (lei)</label>
+                  <input
+                    type="number"
+                    name="personalizationPrice"
+                    defaultValue={editingProduct?.personalizationPrice || ''}
+                    min="0"
+                    step="0.01"
+                    placeholder="21.00"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Text Exemplu Personalizare</label>
+                  <input
+                    type="text"
+                    name="personalizationText"
+                    defaultValue={editingProduct?.personalizationText || ''}
+                    placeholder="La mulți ani, Ioana!"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                  />
+                </div>
               </div>
               
               <div className="flex items-center">

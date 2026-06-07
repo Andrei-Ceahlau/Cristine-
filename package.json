@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "tw:build": "tailwindcss --postcss ./tailwind.postcss.config.cjs -i ./src/tw-input.css -o ./src/generated/tailwind.css",
+    "dev": "npm run tw:build && vite",
+    "build": "npm run tw:build && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
